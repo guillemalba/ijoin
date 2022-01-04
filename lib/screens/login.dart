@@ -1,8 +1,8 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ijoin/screens/home.dart';
 import 'package:ijoin/screens/register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-/*import 'package:fluttertoast/fluttertoast.dart';*///TODO:toast
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -166,15 +166,15 @@ class _LoginScreenState extends State<LoginScreen> {
         await _auth
             .signInWithEmailAndPassword(email: email, password: password)
             .then((uid) => {
-          /*Fluttertoast.showToast(msg: "Login Successful"),*///TODO:toast
+          Fluttertoast.showToast(msg: "Login Successful"),
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (context) => HomeScreen())),
         });
       } on FirebaseAuthException catch (error) {
+
         switch (error.code) {
           case "invalid-email":
             errorMessage = "Your email address appears to be malformed.";
-
             break;
           case "wrong-password":
             errorMessage = "Your password is wrong.";
@@ -194,8 +194,8 @@ class _LoginScreenState extends State<LoginScreen> {
           default:
             errorMessage = "An undefined Error happened.";
         }
-        /*Fluttertoast.showToast(msg: errorMessage!);*///TODO:toast
-        print(error.code);
+        Fluttertoast.showToast(msg: errorMessage!);
+        /*print(error.code);*/
       }
     }
   }

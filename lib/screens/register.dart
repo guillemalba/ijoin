@@ -4,7 +4,7 @@ import 'package:ijoin/screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ijoin/screens/login.dart';
-/*import 'package:fluttertoast/fluttertoast.dart';*///TODO:toast
+import 'package:fluttertoast/fluttertoast.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
@@ -32,7 +32,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     //first name field
-    final userName = TextFormField(
+    final firstNameField = TextFormField(
         autofocus: false,
         controller: firstNameEditingController,
         keyboardType: TextInputType.name,
@@ -53,7 +53,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         decoration: InputDecoration(
           prefixIcon: Icon(Icons.account_circle),
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Username",
+          hintText: "First Name",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -204,14 +204,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           fit: BoxFit.contain,
                         )),
                     SizedBox(height: 45),
-                    userName,
+                    firstNameField,
+                    SizedBox(height: 20),
+                    secondNameField,
                     SizedBox(height: 20),
                     emailField,
                     SizedBox(height: 20),
                     passwordField,
                     SizedBox(height: 20),
                     confirmPasswordField,
-                    SizedBox(height: 35),
+                    SizedBox(height: 20),
                     signUpButton,
                     SizedBox(height: 45),
                     Row(
@@ -251,7 +253,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             .createUserWithEmailAndPassword(email: email, password: password)
             .then((value) => {postDetailsToFirestore()})
             .catchError((e) {
-          /*Fluttertoast.showToast(msg: e!.message);*///TODO:toast
+          Fluttertoast.showToast(msg: e!.message);
         });
       } on FirebaseAuthException catch (error) {
         switch (error.code) {
@@ -276,7 +278,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           default:
             errorMessage = "An undefined Error happened.";
         }
-        /*Fluttertoast.showToast(msg: errorMessage!);*///TODO:toast
+        Fluttertoast.showToast(msg: errorMessage!);
         print(error.code);
       }
     }
@@ -301,7 +303,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         .collection("users")
         .doc(user.uid)
         .set(userModel.toMap());
-    /*Fluttertoast.showToast(msg: "Account created successfully :) ");*///TODO:toast
+    Fluttertoast.showToast(msg: "Account created successfully :) ");
 
     Navigator.pushAndRemoveUntil(
         (context),
