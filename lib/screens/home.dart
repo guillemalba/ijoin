@@ -15,6 +15,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
+  int _paginaActual = 0;
 
   @override
   void initState() {
@@ -75,6 +76,20 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (index){
+          setState(() {
+            _paginaActual = index;
+          });
+        },
+        currentIndex: _paginaActual,
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.task), label: "My Events"),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: "Searcher"),
+          BottomNavigationBarItem(icon: Icon(Icons.supervised_user_circle), label: "Profile")
+        ],
       ),
     );
   }
