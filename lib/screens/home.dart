@@ -80,10 +80,10 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.redAccent,
         selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.redAccent.shade100,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         elevation: 0,
-        unselectedIconTheme: const IconThemeData(
-          color: Colors.red,
-        ),
         onTap: (index){
           setState(() {
             _paginaActual = index;
