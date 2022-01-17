@@ -78,13 +78,19 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.redAccent,
+        selectedItemColor: Colors.white,
+        elevation: 0,
+        unselectedIconTheme: const IconThemeData(
+          color: Colors.red,
+        ),
         onTap: (index){
           setState(() {
             _paginaActual = index;
           });
         },
         currentIndex: _paginaActual,
-        items: [
+        items:const <BottomNavigationBarItem> [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.task), label: "My Events"),
           BottomNavigationBarItem(icon: Icon(Icons.search), label: "Searcher"),
