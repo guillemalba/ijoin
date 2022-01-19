@@ -3,6 +3,7 @@ import 'package:ijoin/model/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'HomePage.dart';
+import 'MyEventsPage.dart';
 import 'ProfilePage.dart';
 import 'SearchPage.dart';
 import 'login.dart';
@@ -21,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List <Widget> _paginas = [
     HomePage(),
+    MyEventsPage(),
     SearchPage(),
     ProfilePage()
   ];
