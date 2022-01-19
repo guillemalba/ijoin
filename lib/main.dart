@@ -1,4 +1,4 @@
-import 'package:ijoin/screens/ProfilePage.dart';
+import 'package:ijoin/screens/EditProfilePage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
       ),
       debugShowCheckedModeBanner: false,
-      home: ProfilePage(),
+      home: EditProfilePage(),
     );
   }
 }
