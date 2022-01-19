@@ -2,7 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ijoin/model/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'HomePage.dart';
+import 'MyEventsPage.dart';
+import 'ProfilePage.dart';
+import 'SearchPage.dart';
 import 'login.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,6 +20,13 @@ class _HomeScreenState extends State<HomeScreen> {
   UserModel loggedInUser = UserModel();
   int _paginaActual = 0;
 
+  List <Widget> _paginas = [
+    HomePage(),
+    MyEventsPage(),
+    SearchPage(),
+    ProfilePage()
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -29,8 +39,41 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {});
     });
   }
-
   @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: BackButton(),
+        elevation: 0,
+        title: const Text("I Join"),
+        centerTitle: true,
+      ),
+      body: _paginas[_paginaActual],
+
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.redAccent,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.redAccent.shade100,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        elevation: 0,
+        onTap: (index){
+          setState(() {
+            _paginaActual = index;
+          });
+        },
+        currentIndex: _paginaActual,
+        items:const <BottomNavigationBarItem> [
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+          BottomNavigationBarItem(icon: Icon(Icons.task), label: "My Events"),
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: "Searcher"),
+          BottomNavigationBarItem(icon: Icon(Icons.supervised_user_circle), label: "Profile")
+        ],
+      ),
+    );
+  }
+
+ /*@override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -98,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
-  }
+  }*/
 
   // the logout function
   Future<void> logout(BuildContext context) async {
