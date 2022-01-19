@@ -7,7 +7,9 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Welcome to the Home page"),
+        leading: BackButton(),
+        elevation: 0,
+        title: const Text("I Join"),
         centerTitle: true,
       ),
       body: Center(
@@ -22,8 +24,8 @@ class HomePage extends StatelessWidget {
                 child: Image.asset("assets/iJoinLogo.png", fit: BoxFit.contain),
               ),
               Text(
-                "Welcome Back",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                "Welcome to the Home screen",
+                style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
               ),
               SizedBox(
                 height: 10,

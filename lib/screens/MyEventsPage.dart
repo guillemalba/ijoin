@@ -7,7 +7,9 @@ class MyEventsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Welcome to MyEvents page"),
+        leading: BackButton(),
+        elevation: 0,
+        title: const Text("I Join"),
         centerTitle: true,
       ),
       body: Center(
@@ -22,7 +24,7 @@ class MyEventsPage extends StatelessWidget {
                 child: Image.asset("assets/iJoinLogo.png", fit: BoxFit.contain),
               ),
               Text(
-                "Welcome Back",
+                "Welcome to my events screen",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               SizedBox(

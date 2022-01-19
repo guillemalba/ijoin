@@ -1,11 +1,16 @@
-import 'package:ijoin/screens/login.dart';
+import 'package:ijoin/screens/ProfilePage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-
+    options: FirebaseOptions(
+      apiKey: "XXX",
+      appId: "XXX",
+      messagingSenderId: "XXX",
+      projectId: "XXX",
+    ),
   );
 
   runApp(MyApp());
@@ -21,7 +26,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
       ),
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: ProfilePage(),
     );
   }
 }

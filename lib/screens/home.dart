@@ -43,7 +43,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Welcome"),
+        leading: BackButton(),
+        elevation: 0,
+        title: const Text("I Join"),
         centerTitle: true,
       ),
       body: _paginas[_paginaActual],
