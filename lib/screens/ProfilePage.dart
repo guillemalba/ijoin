@@ -7,6 +7,8 @@ import 'package:ijoin/screens/EditProfilePage.dart';
 import 'package:ijoin/widget/button_widget.dart';
 import 'package:ijoin/widget/profile_widget.dart';
 
+import 'login.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -60,6 +62,12 @@ class _ProfilePageState extends State<ProfilePage> {
               //buildEmail(user),
               const SizedBox(height:24),
               Center(child:buildEditButton()),
+              const SizedBox(height: 15),
+              ActionChip(
+                  label: Text("Logout"),
+                  onPressed: () {
+                    logout(context);
+                  }),
             ],
           ),
         );
@@ -74,6 +82,12 @@ class _ProfilePageState extends State<ProfilePage> {
     },
   );
 
+  // the logout function
+  Future<void> logout(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => LoginScreen()));
+  }
   /*Widget buildName(User user) => Column(
     children: [
       Text(user.firstName,
