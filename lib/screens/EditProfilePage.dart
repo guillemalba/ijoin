@@ -7,6 +7,8 @@ import 'package:ijoin/widget/profile_widget.dart';
 import 'package:ijoin/widget/textfield_widget.dart';
 
 class EditProfilePage extends StatefulWidget {
+  const EditProfilePage({Key? key}) : super(key: key);
+
   @override
   _EditProfilePageState createState() =>_EditProfilePageState();
 
@@ -44,6 +46,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
           label: 'Email',
           text: 'maria@gmail.com', //user.email
           onChanged: (email){},
+        ),
+        const SizedBox(height:24),
+        TextFieldWidget(
+          label: 'Password',
+          text: '********', //user.password
+          onChanged: (password){},
         ),
         const SizedBox(height:24),
         Center(child:buildSaveButton()),
