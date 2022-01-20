@@ -18,8 +18,9 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  //FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = UserModel();
+  UserModel userModel = UserModel();
 
   @override
   void initState() {
@@ -29,7 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
         .doc(user!.uid)
         .get()
         .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
+      this.userModel = UserModel.fromMap(value.data());
       setState(() {});
     });
   }
@@ -54,10 +55,18 @@ class _ProfilePageState extends State<ProfilePage> {
               const Text("Name",
                 style: TextStyle(color: Colors.black54, fontWeight: FontWeight.w500),
               ),
-             //buildName(user),
+              //buildName(userModel),
+              Text("${userModel.firstName} ${userModel.secondName}",
+                style: TextStyle(color: Colors.black54, fontWeight: FontWeight.w500,
+                ),
+              ),
               const SizedBox(height:24),
               const Text("Email",
                 style: TextStyle(color: Colors.black54, fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(height: 4),
+              Text("${userModel.email}",
+                style: TextStyle(color: Colors.black54,fontWeight: FontWeight.w500,),
               ),
               //buildEmail(user),
               const SizedBox(height:24),
@@ -82,23 +91,24 @@ class _ProfilePageState extends State<ProfilePage> {
     },
   );
 
+  /*Widget buildName(User user) => Column(
+    children: [
+      Text("${userModel.firstName} ${userModel.secondName}",
+          style: TextStyle(color: Colors.black54, fontWeight: FontWeight.w500,
+          ),
+       ),
+      const SizedBox(height: 4),
+        Text("${userModel.email}",
+            style: TextStyle(color: Colors.black54,fontWeight: FontWeight.w500,),
+        ),
+    ],
+  );*/
+
   // the logout function
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => LoginScreen()));
   }
-  /*Widget buildName(User user) => Column(
-    children: [
-      Text(user.firstName,
-          style: TextStyle(color: Colors.black54, fontWeight: FontWeight.w500,
-          ),
-       ),
-      const SizedBox(height: 4),
-        Text(user.email,
-            style: TextStyle(color: Colors.black54,fontWeight: FontWeight.w500,),
-        ),
-    ],
-  );*/
 
 }
