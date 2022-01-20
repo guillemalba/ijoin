@@ -35,7 +35,6 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(),
         elevation: 0,
         title: const Text("I Join"),
         centerTitle: true,
@@ -49,6 +48,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 onClicked: () async {},
               ),
               //const SizedBox(height:24),
+
              //buildName(user),
               const SizedBox(height:24),
               Center(child:buildEditButton()),
@@ -58,7 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget buildEditButton() => ButtonWidget(
-    text: ' Edit Profile',
+    text: 'Edit Profile',
     onClicked: () {
       Navigator.of(context).push(
         MaterialPageRoute(builder: (context)=> EditProfilePage()),

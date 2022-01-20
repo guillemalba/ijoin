@@ -7,7 +7,6 @@ class MyEventsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(),
         elevation: 0,
         title: const Text("I Join"),
         centerTitle: true,

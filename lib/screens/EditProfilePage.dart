@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ijoin/model/user.dart';
-import 'package:ijoin/widget/appbar_widget.dart';
+import 'package:ijoin/widget/button_widget.dart';
 import 'package:ijoin/widget/profile_widget.dart';
 import 'package:ijoin/widget/textfield_widget.dart';
 
@@ -18,7 +18,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   @override
   Widget build(BuildContext context) => Scaffold (
-    appBar: buildAppBar(context),
+    appBar: AppBar(
+      leading: BackButton(),
+      elevation: 0,
+      title: const Text("I Join"),
+      centerTitle: true,
+    ),
     body: ListView(
       padding: EdgeInsets.symmetric(horizontal: 12),
       physics: BouncingScrollPhysics(),
@@ -40,7 +45,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
           text: 'maria@gmail.com', //user.email
           onChanged: (email){},
         ),
+        const SizedBox(height:24),
+        Center(child:buildSaveButton()),
       ],
     ),
+  );
+
+
+  Widget buildSaveButton() => ButtonWidget(
+    text: 'Save',
+    onClicked: () {
+      //guardar datos
+    },
   );
 }
