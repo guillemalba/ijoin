@@ -1,6 +1,6 @@
-import 'package:ijoin/screens/EditProfilePage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:ijoin/screens/ProfilePage.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
       ),
       debugShowCheckedModeBanner: false,
-      home: EditProfilePage(),
+      home: ProfilePage(),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ijoin/model/user.dart';
+import 'package:ijoin/screens/EditProfilePage.dart';
 import 'package:ijoin/widget/button_widget.dart';
 import 'package:ijoin/widget/profile_widget.dart';
 
@@ -58,7 +59,11 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget buildEditButton() => ButtonWidget(
     text: ' Edit Profile',
-    onClicked: () {},
+    onClicked: () {
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (context)=> EditProfilePage()),
+      );
+    },
   );
 
   /*Widget buildName(User user) => Column(
