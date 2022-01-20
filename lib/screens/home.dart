@@ -42,14 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: BackButton(),
-        elevation: 0,
-        title: const Text("I Join"),
-        centerTitle: true,
-      ),
       body: _paginas[_paginaActual],
-
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.redAccent,
         selectedItemColor: Colors.white,

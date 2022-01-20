@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ijoin/model/user.dart';
+import 'package:ijoin/screens/EditProfilePage.dart';
 import 'package:ijoin/widget/button_widget.dart';
 import 'package:ijoin/widget/profile_widget.dart';
 
 class ProfilePage extends StatefulWidget {
+  const ProfilePage({Key? key}) : super(key: key);
+
   @override
   _ProfilePageState createState() =>_ProfilePageState();
 
@@ -15,7 +18,6 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
-  //const ProfilePage({Key? key}) : super(key: key);
 
   @override
   void initState() {
@@ -34,7 +36,6 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(),
         elevation: 0,
         title: const Text("I Join"),
         centerTitle: true,
@@ -48,6 +49,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 onClicked: () async {},
               ),
               //const SizedBox(height:24),
+
              //buildName(user),
               const SizedBox(height:24),
               Center(child:buildEditButton()),
@@ -57,8 +59,12 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget buildEditButton() => ButtonWidget(
-    text: ' Edit Profile',
-    onClicked: () {},
+    text: 'Edit Profile',
+    onClicked: () {
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (context)=> EditProfilePage()),
+      );
+    },
   );
 
   /*Widget buildName(User user) => Column(
