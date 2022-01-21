@@ -17,15 +17,19 @@ class _SearchState extends State<SearchPage>{
 
   void searchEvent(String query) async {
     final response = await widget.dio.get(
-        'https://app.ticketmaster.com/discovery/v2/events.json?apikey=Vf8wRn8KjvXH5Tss6EW41x1MXfQfxbGP&keyword=Barcelona');
+        'https://app.ticketmaster.eu/mfxapi/v2/events?apikey=BgunvccCEQmfSA1pZ5a27XrLOGrZgE0t', queryParameters: {
+    //'https://app.ticketmaster.com/discovery/v2/events.json?apikey=Vf8wRn8KjvXH5Tss6EW41x1MXfQfxbGP', queryParameters: {
+      'event_name': query
 
-/*      , queryParameters: {
-      'q': query
     },
-    );*/
+    );
 
     setState(() {
-      _events = response.data['_embedded']['events'];
+      if (response.data['pagination']['total'] == 0) {
+        _events.clear();
+      } else {
+        _events = response.data['events'];
+      }
     });
   }
 
@@ -71,8 +75,7 @@ class _SearchState extends State<SearchPage>{
               shrinkWrap: true ,
               itemBuilder: (context, index) => ListTile(
                 title: Text(_events[index]['name']),
-                subtitle: Text(_events[index]["type"])
-
+                subtitle: Text(_events[index]['url'])
               )
             ),
           ),
@@ -125,7 +128,6 @@ class _SearchFormState extends State<SearchForm> {
                   hintText: 'Escribe un evento...',
                   border: OutlineInputBorder(),
                   filled: true,
-
                 ),
                 onChanged: (value) {
                   event = value;
@@ -142,60 +144,42 @@ class _SearchFormState extends State<SearchForm> {
           Container(
             width: double.infinity,
             height: 50,
-              margin: const EdgeInsets.all(20),
-              child: SizedBox(
-                child: TextButton(
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.all(15.0),
-                      primary: Colors.white,
-                      backgroundColor: Colors.redAccent,
-                    ),
-                    onPressed: () {
-                      _openAddEntryDialog();
-                    },
-                    child: Text('Filtros')
+            margin: const EdgeInsets.all(20),
+            child: SizedBox(
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.all(15.0),
+                  primary: Colors.white,
+                  backgroundColor: Colors.redAccent,
                 ),
+                onPressed: () {
+                  _openAddEntryDialog();
+                },
+                child: Text('Filtros')
               ),
+            ),
           ),
           Container(
             width: double.infinity,
             height: 50,
-              margin: const EdgeInsets.only(bottom: 20.0, left: 20, right: 20),
-              child: SizedBox(
-                child: TextButton(
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.all(15.0),
-                      primary: Colors.white,
-                      backgroundColor: Colors.redAccent,
-                    ),
-                    onPressed: () {
-                      final isValid = _formKey.currentState?.validate();
-                      if (isValid!) {
-                        widget.onSearch(event);
-                      }
-                    },
-                    child: Text('Buscar')
+            margin: const EdgeInsets.only(bottom: 20.0, left: 20, right: 20),
+            child: SizedBox(
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  padding: const EdgeInsets.all(15.0),
+                  primary: Colors.white,
+                  backgroundColor: Colors.redAccent,
                 ),
+                onPressed: () {
+                  final isValid = _formKey.currentState?.validate();
+                  if (isValid!) {
+                    widget.onSearch(event);
+                  }
+                },
+                child: Text('Buscar')
               ),
+            ),
           ),
-/*                  ? Expanded(
-                    child: ListView.separated(
-                    itemCount: _events.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        height: 400,
-                        width: double.infinity,
-                        child: Center(
-                          child: Text(_events[index]["name"])
-*//*                          title: Text(_events[index]["type"]),
-                          subtitle: Text(_events[index]["url"])*//*
-                        ),
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) => const Divider(),
-                  ),
-                )
-              : Container()*/
         ],
       ),
     );
