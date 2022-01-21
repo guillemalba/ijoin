@@ -7,6 +7,8 @@ import 'package:ijoin/screens/EditProfilePage.dart';
 import 'package:ijoin/widget/button_widget.dart';
 import 'package:ijoin/widget/profile_widget.dart';
 
+import 'login.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -16,8 +18,9 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  //FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = UserModel();
+  UserModel userModel = UserModel();
 
   @override
   void initState() {
@@ -27,7 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
         .doc(user!.uid)
         .get()
         .then((value) {
-      this.loggedInUser = UserModel.fromMap(value.data());
+      this.userModel = UserModel.fromMap(value.data());
       setState(() {});
     });
   }
@@ -48,11 +51,32 @@ class _ProfilePageState extends State<ProfilePage> {
                 imagePath: 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.cutypaste.com%2Fentretencion%2F25-modelos-que-se-convirtieron-en-actrices%2F&psig=AOvVaw0eXZ4h4Q28Yf_nmND5Tv19&ust=1642672691199000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKjJ0eXGvfUCFQAAAAAdAAAAABAD',
                 onClicked: () async {},
               ),
-              //const SizedBox(height:24),
-
-             //buildName(user),
+              const SizedBox(height:24),
+              const Text("Name",
+                style: TextStyle(color: Colors.black54, fontWeight: FontWeight.w500),
+              ),
+              //buildName(userModel),
+              Text("${userModel.firstName} ${userModel.secondName}",
+                style: TextStyle(color: Colors.black54, fontWeight: FontWeight.w500,
+                ),
+              ),
+              const SizedBox(height:24),
+              const Text("Email",
+                style: TextStyle(color: Colors.black54, fontWeight: FontWeight.w500),
+              ),
+              const SizedBox(height: 4),
+              Text("${userModel.email}",
+                style: TextStyle(color: Colors.black54,fontWeight: FontWeight.w500,),
+              ),
+              //buildEmail(user),
               const SizedBox(height:24),
               Center(child:buildEditButton()),
+              const SizedBox(height: 15),
+              ActionChip(
+                  label: Text("Logout"),
+                  onPressed: () {
+                    logout(context);
+                  }),
             ],
           ),
         );
@@ -69,15 +93,22 @@ class _ProfilePageState extends State<ProfilePage> {
 
   /*Widget buildName(User user) => Column(
     children: [
-      Text(user.firstName,
+      Text("${userModel.firstName} ${userModel.secondName}",
           style: TextStyle(color: Colors.black54, fontWeight: FontWeight.w500,
           ),
        ),
       const SizedBox(height: 4),
-        Text(user.email,
+        Text("${userModel.email}",
             style: TextStyle(color: Colors.black54,fontWeight: FontWeight.w500,),
         ),
     ],
   );*/
+
+  // the logout function
+  Future<void> logout(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => LoginScreen()));
+  }
 
 }
