@@ -1,10 +1,7 @@
-class EventModel {
-  String? id;
-  String? name;
-  String? location;
-  String? date;
+  class EventFilter {
+  String location;
+  DateTime date;
+  List categoria = [];
 
-  EventModel(
-    {this.id, this.name, this.location, this.date}
-  );
+  EventFilter(this.location, this.date, this.categoria);
 }
