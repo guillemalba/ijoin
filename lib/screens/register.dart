@@ -287,6 +287,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     // calling our firestore
     // calling our user model
     // sedning these values
+    Fluttertoast.showToast(msg: "Account created successfully!");
 
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
@@ -303,7 +304,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         .collection("users")
         .doc(user.uid)
         .set(userModel.toMap());
-    Fluttertoast.showToast(msg: "Account created successfully :) ");
+    Fluttertoast.showToast(msg: "Account stored into firestore successfully.");
 
     Navigator.pushAndRemoveUntil(
         (context),
