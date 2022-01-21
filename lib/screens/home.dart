@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:ijoin/model/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -41,30 +42,35 @@ class _HomeScreenState extends State<HomeScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    final items = <Widget>[
+      Icon(Icons.home, size: 30, color: Colors.white, semanticLabel: "Home"),
+      Icon(Icons.task, size: 30, color: Colors.white, semanticLabel: "My Events"),
+      Icon(Icons.search, size: 30, color: Colors.white, semanticLabel: "Search"),
+      Icon(Icons.supervised_user_circle, size: 30, color: Colors.white, semanticLabel: "Profile"),
+    ];
+
     return Scaffold(
+      extendBody: true,
+      backgroundColor: Colors.red,
       body: _paginas[_paginaActual],
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.redAccent,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.redAccent.shade100,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        elevation: 0,
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: Colors.transparent,
+        color: Colors.red,
+        height: 60,
+        index: _paginaActual,
+        items: items,
+        animationCurve: Curves.easeInOut,
+        animationDuration: Duration (milliseconds: 250),
         onTap: (index){
           setState(() {
             _paginaActual = index;
           });
         },
-        currentIndex: _paginaActual,
-        items:const <BottomNavigationBarItem> [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.task), label: "My Events"),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: "Searcher"),
-          BottomNavigationBarItem(icon: Icon(Icons.supervised_user_circle), label: "Profile")
-        ],
       ),
     );
   }
+
+
 
  /*@override
   Widget build(BuildContext context) {

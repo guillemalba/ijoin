@@ -24,12 +24,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'I Join App ',
+      title: 'I Join App',
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: LoginScreen(),
     );
   }
 }

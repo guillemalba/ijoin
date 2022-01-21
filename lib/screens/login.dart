@@ -1,4 +1,5 @@
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:ijoin/screens/HomePage.dart';
 import 'package:ijoin/screens/home.dart';
 import 'package:ijoin/screens/register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,6 +13,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
   // form key
   final _formKey = GlobalKey<FormState>();
 
@@ -25,8 +27,26 @@ class _LoginScreenState extends State<LoginScreen> {
   // string for displaying the error Message
   String? errorMessage;
 
+  // to keep the user logged in
+  User? user;
+  @override
+  void initState() {
+    super.initState();
+    onRefresh(FirebaseAuth.instance.currentUser);
+  }
+
+  onRefresh(userCred) {
+    setState(() {
+      user = userCred;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    if (user != null) {
+      return HomeScreen();
+    }
     //email field
     final emailField = TextFormField(
         autofocus: false,
