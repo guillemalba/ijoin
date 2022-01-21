@@ -2,19 +2,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:ijoin/screens/ProfilePage.dart';
 import 'package:ijoin/screens/home.dart';
+import 'package:ijoin/screens/login.dart';
 import 'package:ijoin/screens/notifier.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: FirebaseOptions(
-      apiKey: "XXX",
-      appId: "XXX",
-      messagingSenderId: "XXX",
-      projectId: "XXX",
-    ),
-  );
+  await Firebase.initializeApp();
 
   runApp(MultiProvider(
       providers: [
