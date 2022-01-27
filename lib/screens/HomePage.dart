@@ -16,7 +16,7 @@ class _HomeState extends State<HomePage>{
 
   void searchEvent(var location) async {
     final response = await widget.dio.get(
-        'https://app.ticketmaster.eu/mfxapi/v2/events?apikey=BgunvccCEQmfSA1pZ5a27XrLOGrZgE0t', queryParameters: {
+      'https://app.ticketmaster.eu/mfxapi/v2/events?apikey=BgunvccCEQmfSA1pZ5a27XrLOGrZgE0t&rows=50', queryParameters: {
       'country_ids': location,
     });
 
@@ -65,7 +65,6 @@ class _HomeState extends State<HomePage>{
           children: <Widget>[
             Expanded(
               child: ListView.builder(
-                //padding: const EdgeInsets.only(top: 20, bottom: 20, left: 10, right: 10),
                 controller: _controller,//new line
                 itemCount: _events.length,
                 shrinkWrap: true ,
