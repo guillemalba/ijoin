@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'HomePage.dart';
 import 'MyEventsPage.dart';
-import 'ProfilePage.dart';
+import 'profile_page.dart';
 import 'SearchPage.dart';
 import 'login.dart';
 
@@ -43,10 +43,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final items = <Widget>[
-      Icon(Icons.home, size: 30, color: Colors.white, semanticLabel: "Home"),
-      Icon(Icons.task, size: 30, color: Colors.white, semanticLabel: "My Events"),
-      Icon(Icons.search, size: 30, color: Colors.white, semanticLabel: "Search"),
-      Icon(Icons.supervised_user_circle, size: 30, color: Colors.white, semanticLabel: "Profile"),
+      const Icon(Icons.home, size: 30, color: Colors.white, semanticLabel: "Home"),
+      const Icon(Icons.task, size: 30, color: Colors.white, semanticLabel: "My Events"),
+      const Icon(Icons.search, size: 30, color: Colors.white, semanticLabel: "Search"),
+      const Icon(Icons.supervised_user_circle, size: 30, color: Colors.white, semanticLabel: "Profile"),
     ];
 
     return Scaffold(
@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
         index: _paginaActual,
         items: items,
         animationCurve: Curves.easeInOut,
-        animationDuration: Duration (milliseconds: 250),
+        animationDuration: const Duration (milliseconds: 250),
         onTap: (index){
           setState(() {
             _paginaActual = index;

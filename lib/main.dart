@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:ijoin/screens/ProfilePage.dart';
+import 'package:ijoin/screens/profile_page.dart';
 import 'package:ijoin/screens/home.dart';
 import 'package:ijoin/screens/login.dart';
 import 'package:ijoin/screens/notifier.dart';
