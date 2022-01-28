@@ -1,9 +1,11 @@
 //Página de Events Detail
 import 'package:flutter/material.dart';
+import 'package:ijoin/screens/HomePage.dart';
 
 class EventsDetail extends StatelessWidget {
-  final String text;
-  const EventsDetail({Key? key,required this.text}) : super(key: key);
+  //final String text;
+  final Event event;
+  const EventsDetail({Key? key, required this.event}) : super(key: key);
 
   
   @override
@@ -26,11 +28,8 @@ class EventsDetail extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget> [
-                      //Text(events.name),
-                      //Text(events.location),
-                      //Text(events.date),
                       Text(
-                        text,
+                        event.name,
                         style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height:50),

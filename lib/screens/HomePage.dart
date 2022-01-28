@@ -11,10 +11,9 @@ class HomePage extends StatefulWidget {
 }
 
 class Event {
-  final String name;
-  final String location;
-  final String date;
-  const Event(this.name,this.location, this.date);
+  late String name;
+  late String location;
+  late String date;
 }
 
 class _HomeState extends State<HomePage>{
@@ -81,13 +80,16 @@ class _HomeState extends State<HomePage>{
                    contentPadding: const EdgeInsets.all(15),
                     title: Text(_events[index]['name'],style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                     subtitle: Text(_events[index]['venue']['location']['address']['city'] + '\n' + _events[index]['event_date']['value']),
+
                     onTap: () {
-                      /*event.name = _events[index]['name'];
+
+                      event.name = _events[index]['name'];
                       event.location = _events[index]['venue']['location']['address']['city'];
-                      event.date = _events[index]['event_date']['value'];*/
+                      event.date = _events[index]['event_date']['value'];
+
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => EventsDetail(text: 'Evento: \n\n' + _events[index]['name'] + '\n\n' + 'Ubicación: \n\n' + _events[index]['venue']['location']['address']['city'] + '\n\n' + 'Fecha: \n\n' + _events[index]['event_date']['value'] )),
+                        MaterialPageRoute(builder: (context) => EventsDetail(event: event)),//(text: 'Evento: \n\n' + _events[index]['name'] + '\n\n' + 'Ubicación: \n\n' + _events[index]['venue']['location']['address']['city'] + '\n\n' + 'Fecha: \n\n' + _events[index]['event_date']['value'] )),
                       );
                     },
                 ),
