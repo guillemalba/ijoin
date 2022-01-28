@@ -3,6 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:ijoin/model/event.dart';
 import 'package:ijoin/screens/filtros.dart';
 
+import 'EventsDetail.dart';
+
 class SearchPage extends StatefulWidget {
   final dio = Dio();
 
@@ -30,8 +32,6 @@ class _SearchState extends State<SearchPage>{
         textType = textType.toString() + ',' + type[i].toString();
       }
     }
-    print(date);
-    print ("hola");
     final response = await widget.dio.get(
       'https://app.ticketmaster.eu/mfxapi/v2/events?apikey=BgunvccCEQmfSA1pZ5a27XrLOGrZgE0t', queryParameters: {
       //'https://app.ticketmaster.com/discovery/v2/events.json?apikey=Vf8wRn8KjvXH5Tss6EW41x1MXfQfxbGP', queryParameters: {
@@ -121,7 +121,7 @@ class _SearchState extends State<SearchPage>{
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
       elevation: 0,
-      title: const Text("Search"),
+      title: const Text("Searcher"),
       centerTitle: true,
     ),
     body: Center(
@@ -136,8 +136,60 @@ class _SearchState extends State<SearchPage>{
             children: [
               Container(
                 width: double.infinity,
-                height: 50,
-                margin: const EdgeInsets.only(top: 20.0),
+                margin: const EdgeInsets.only(top: 20.0, bottom: 10, left: 20, right: 20),
+                child: SizedBox(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget> [
+                      TextButton(
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.all(15),
+                            primary: Colors.redAccent,
+                            backgroundColor: Colors.transparent,
+                            fixedSize: Size.fromWidth(MediaQuery.of(context).size.width),
+                            side: BorderSide(
+                              width: 2.0,
+                              color: Colors.redAccent,
+                            ),
+                          ),
+                          onPressed: () {
+                            _openAddEntryDialog();
+                          },
+                          child: Text('Add filters')
+
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const SizedBox(height: 30),
+                          Text((() {
+                            if(location != null) {
+                              return location + ' - ';
+                            }
+                            return '';
+                          })()),
+                          Expanded(child:
+                          Text((() {
+                            if(type.isNotEmpty) {
+                              var typeText = type[0];
+                              for (int i = 1; i < type.length; i++) {
+                                typeText = typeText + ', ' + type[i];
+                              }
+                              return typeText;
+                            }
+                            return '';
+                          })()),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                height: 100,
+                margin: const EdgeInsets.only(left: 20, right:20 ),
                 child: SizedBox(
                   child: TextFormField(
                     decoration: const InputDecoration(
@@ -158,52 +210,7 @@ class _SearchState extends State<SearchPage>{
                   ),
                 ),
               ),
-              Container(
-                width: double.infinity,
-                margin: const EdgeInsets.only(top: 20.0, bottom: 10, left: 20, right: 20),
-                child: SizedBox(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget> [
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          padding: const EdgeInsets.all(15.0),
-                          primary: Colors.white,
-                          backgroundColor: Colors.redAccent,
-                          fixedSize: Size.fromWidth(MediaQuery.of(context).size.width)
-                        ),
-                        onPressed: () {
-                          _openAddEntryDialog();
-                        },
-                        child: Text('Filters')
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text((() {
-                            if(location != null) {
-                              return location + ' - ';
-                            }
-                            return '';
-                          })()),
-                          Expanded(child:
-                            Text((() {
-                              if(type.isNotEmpty) {
-                                var typeText = type[0];
-                                for (int i = 1; i < type.length; i++) {
-                                  typeText = typeText + ', ' + type[i];
-                                }
-                                return typeText;
-                              }
-                              return '';
-                            })()),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
+
               Container(
                 width: double.infinity,
                 margin: const EdgeInsets.only(bottom: 20.0, left: 20, right: 20),
@@ -218,6 +225,7 @@ class _SearchState extends State<SearchPage>{
                         final isValid = _formKey.currentState?.validate();
                         if (isValid!) {
                           searchEvent(event, locationId, typeId);
+                          const Text("Results:\n");
                           //widget.onSearch(event, location);
                         }
                       },
@@ -225,11 +233,15 @@ class _SearchState extends State<SearchPage>{
                   ),
                 ),
               ),
+              const SizedBox(height: 25),
+              const Text("Results:",style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.redAccent)),
+              const SizedBox(height: 30),
             ],
           ),
         ),
           _events.isEmpty ? Text('No results to display')
           : Expanded(
+            //child: const Text("hola"),
             child: ListView.builder(
               controller: _controller,//new line
               itemCount: _events.length,
@@ -237,7 +249,14 @@ class _SearchState extends State<SearchPage>{
               itemBuilder: (context, index) => ListTile(
                   contentPadding: const EdgeInsets.only(top: 10, bottom: 10,left:20, right:20),
                 title: Text(_events[index]['name'],style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                subtitle: Text(_events[index]['venue']['location']['address']['city'] + '\n' + _events[index]['event_date']['value'])
+                subtitle: Text(_events[index]['venue']['location']['address']['city'] + '\n' + _events[index]['event_date']['value']),
+                  onTap: () {
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EventsDetail(text: 'Evento: \n\n' + _events[index]['name'] + '\n\n' + 'Ubicación: \n\n' + _events[index]['venue']['location']['address']['city'] + '\n\n' + 'Fecha: \n\n' + _events[index]['event_date']['value'] )),
+                  //(event: event)),
+            );
+          },
               )
             ),
           ),
