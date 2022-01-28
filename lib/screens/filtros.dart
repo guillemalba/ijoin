@@ -13,9 +13,9 @@ class FiltrosScreen extends StatefulWidget {
 
 class _FiltrosState extends State<FiltrosScreen> {
   var _currentSelectedDate;
-  var _currentCity;
-  List<String> _currentEvent = [];
-  List<String> _categories = [];
+  var _currentCountry;
+  List _currentEvent = [];
+  List _categories = [];
 
   void callDatePicker() async{
     var selectedDate = await getDatePickerWidget();
@@ -76,12 +76,12 @@ class _FiltrosState extends State<FiltrosScreen> {
   );
 
 
-  //CIUDAD
+  //PAIS
   _showAddCityDialog(BuildContext context) => showDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text("Enter a city or country"),
+        title: Text("Enter a country"),
         content: SingleChildScrollView(
           child: Container(
             width: double.infinity,
@@ -94,7 +94,7 @@ class _FiltrosState extends State<FiltrosScreen> {
                       hintText: 'Write here',
                   ),
                   onChanged: (value) {
-                    _currentCity = value;
+                    _currentCountry = value;
                   },
                 ),
               ],
@@ -106,45 +106,6 @@ class _FiltrosState extends State<FiltrosScreen> {
             child: Text("OK"),
             onPressed: () {
               Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
-
-  //EVENT
-  _showAddEventDialog(BuildContext context) => showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: Text("Enter the type event"),
-        content: SingleChildScrollView(
-          child: Container(
-            width: double.infinity,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  keyboardType: TextInputType.text,
-                  decoration: InputDecoration(
-                    hintText: 'Write here',
-                  ),
-                  onChanged: (value) {
-                    //_currentEvent = value;
-                  },
-                ),
-              ],
-            ),
-          ),
-        ),
-        actions: [
-          FlatButton(
-            child: Text("OK"),
-            onPressed: () {
-              Navigator.of(context).pop(
-
-              );
             },
           ),
         ],
@@ -191,7 +152,7 @@ class _FiltrosState extends State<FiltrosScreen> {
                 Navigator
                   .of(context)
                   .pop(EventFilter(
-                  _currentCity,
+                  _currentCountry,
                   _currentSelectedDate,
                   _currentEvent
                   )
@@ -213,7 +174,7 @@ class _FiltrosState extends State<FiltrosScreen> {
                 child:
                 TextButton.icon(
                   icon: const Icon(Icons.calendar_today),
-                  label: const Text('Elige fecha'),
+                  label: const Text('Choose the date'),
                   onPressed: () {
                     callDatePicker();
                   },
@@ -232,7 +193,7 @@ class _FiltrosState extends State<FiltrosScreen> {
                 child:
                 TextButton.icon(
                   icon: const Icon(Icons.add_location),
-                  label: const Text('Elige ciudad'),
+                  label: const Text('Choose a country'),
                   onPressed: () {
                     _showAddCityDialog(context);
                   },
@@ -251,7 +212,7 @@ class _FiltrosState extends State<FiltrosScreen> {
                 child:
                 TextButton.icon(
                   icon: const Icon(Icons.view_list),
-                  label: const Text('Tipo de evento'),
+                  label: const Text('Choose the event type'),
                   onPressed: () {
                     searchCategories();
                   },
