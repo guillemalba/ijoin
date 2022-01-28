@@ -3,17 +3,12 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ijoin/model/user.dart';
 import 'package:ijoin/screens/home.dart';
-import 'package:ijoin/screens/profile_page.dart';
-import 'package:ijoin/widget/button_widget.dart';
-import 'package:ijoin/widget/profile_widget.dart';
-import 'package:ijoin/widget/textfield_widget.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'HomePage.dart';
@@ -59,8 +54,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final firstNameEditingController = TextEditingController();
   final secondNameEditingController = TextEditingController();
   final countryEditingController = TextEditingController();
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -245,7 +238,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           child: ClipOval(
             child: Image.file(
               File(_imageFile!.path),
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
               width: 160.0,
               height: 160.0,
             ),
@@ -337,13 +330,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
       _country = snapshot.get('country');
     }
   }
-
-  Widget buildSaveButton() => ButtonWidget(
-    text: 'Save',
-    onClicked: () {
-      saveToFirebase();
-    },
-  );
 
   saveToFirebase() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
