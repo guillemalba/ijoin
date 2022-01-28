@@ -20,6 +20,7 @@ class _SearchState extends State<SearchPage>{
   var locationId;
   List type = [];
   List typeId = [];
+  var date;
 
   void searchEvent(var name, var location, List type) async {
     var textType = null;
@@ -29,13 +30,16 @@ class _SearchState extends State<SearchPage>{
         textType = textType.toString() + ',' + type[i].toString();
       }
     }
-
+    print(date);
+    print ("hola");
     final response = await widget.dio.get(
       'https://app.ticketmaster.eu/mfxapi/v2/events?apikey=BgunvccCEQmfSA1pZ5a27XrLOGrZgE0t', queryParameters: {
       //'https://app.ticketmaster.com/discovery/v2/events.json?apikey=Vf8wRn8KjvXH5Tss6EW41x1MXfQfxbGP', queryParameters: {
       'event_name': name,
       'country_ids': location,
-      'category_ids': textType
+      'category_ids': textType,
+      'eventdate_from': date,
+      'eventdate_to': date
     });
 
     setState(() {
@@ -86,6 +90,7 @@ class _SearchState extends State<SearchPage>{
     if (save != null) {
       location = save.getLocation();
       type = save.getCategoria();
+      date = save.getDate();
       searchCountry();
       searchCategory();
     }

@@ -1,10 +1,13 @@
 //Página del Home
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ijoin/screens/EventsDetail.dart';
 
 class HomePage extends StatefulWidget {
   final dio = Dio();
+  bool firstTime = true;
 
   @override
   _HomeState createState() => _HomeState();
@@ -19,12 +22,16 @@ class Event {
 class _HomeState extends State<HomePage>{
   late ScrollController _controller;
   List _events = [];
+  var _country;
+  var _countryId;
+  User? user = FirebaseAuth.instance.currentUser;
   late Event event;
 
-  void searchEvent(var location) async {
+  Future searchEvent() async {
+    print(_countryId);
     final response = await widget.dio.get(
       'https://app.ticketmaster.eu/mfxapi/v2/events?apikey=BgunvccCEQmfSA1pZ5a27XrLOGrZgE0t&rows=50', queryParameters: {
-      'country_ids': location,
+      'country_ids': _countryId,
     });
 
     setState(() {
@@ -36,8 +43,38 @@ class _HomeState extends State<HomePage>{
     });
   }
 
+  Future readUser() async {
+    final docUser = FirebaseFirestore.instance.collection('users').doc(user!.uid.toString());
+    final snapshot = await docUser.get();
+
+    if (snapshot.exists) {
+      _country = snapshot.get('country');
+    }
+    searchCountry();
+  }
+
+  Future searchCountry() async {
+    final response = await widget.dio.get(
+        'https://app.ticketmaster.eu/mfxapi/v2/countries?apikey=BgunvccCEQmfSA1pZ5a27XrLOGrZgE0t');
+
+    setState(() {
+      for (int i = 0; i < response.data['countries'].length; i++) {
+        if (response.data['countries'][i]['name'].toString().toLowerCase() == _country) {
+          _countryId = response.data['countries'][i]['id'];
+        }
+      }
+      searchEvent();
+    });
+  }
+
   @override
   void initState() {
+    //if (widget.firstTime) {
+      //widget.dio.options.connectTimeout = 10*1000;
+      //widget.dio.options.receiveTimeout = 10*1000;
+      readUser();
+      //widget.firstTime = false;
+    //}
     _controller = ScrollController();
     _controller.addListener(_scrollListener);//// the listener for up and down.
     //searchEvent("Spain");
@@ -59,7 +96,6 @@ class _HomeState extends State<HomePage>{
 
   @override
   Widget build(BuildContext context) {
-    searchEvent("724");
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
