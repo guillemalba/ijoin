@@ -152,7 +152,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         centerTitle: true,
       ),
       body: Container(
-        padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
+        padding: const EdgeInsets.only(top: 20.0, bottom: 10, left: 20, right: 20),
         child: GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
@@ -354,8 +354,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
     if (firstNameEditingController.text.isNotEmpty) {
       _firstName = firstNameEditingController.text;
     }
-    if (lastNameController.text.isNotEmpty) {
-      _lastName = lastNameController.text;
+    if (secondNameEditingController.text.isNotEmpty) {
+      _lastName = secondNameEditingController.text;
     }
     if (countryEditingController.text.isNotEmpty) {
       _country = countryEditingController.text;
