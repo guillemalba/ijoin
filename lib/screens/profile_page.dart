@@ -61,7 +61,7 @@ class _ProfilePageState extends State<ProfilePage> {
           const SizedBox(height:40),
 
           const Text(
-            'First Name\n',
+            'First Name',
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -77,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
           const SizedBox(height:20),
 
           const Text(
-            'Second Name\n',
+            'Last Name',
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -92,7 +92,7 @@ class _ProfilePageState extends State<ProfilePage> {
           const SizedBox(height:20),
 
           const Text(
-            'Email\n',
+            'Email',
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -106,7 +106,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
 
           //buildEmail(user),
-          const SizedBox(height:70),
+          const SizedBox(height:24),
           Center(child:buildEditButton()),
           const SizedBox(height: 15),
           ActionChip(
