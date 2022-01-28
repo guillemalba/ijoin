@@ -1,6 +1,7 @@
 //Página del Home
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:ijoin/screens/EventsDetail.dart';
 
 class HomePage extends StatefulWidget {
   final dio = Dio();
@@ -56,23 +57,30 @@ class _HomeState extends State<HomePage>{
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: const Text("Home"),
+        title: const Text("Events"),
         centerTitle: true,
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+         // mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            const SizedBox(height:15),
             Expanded(
               child: ListView.builder(
                 controller: _controller,//new line
                 itemCount: _events.length,
                 shrinkWrap: true ,
                 itemBuilder: (context, index) => ListTile(
-                    contentPadding: const EdgeInsets.all(10),
-                    title: Text(_events[index]['name']),
-                    subtitle: Text(_events[index]['venue']['location']['address']['city'] + '\n' + _events[index]['event_date']['value'])
-                )
+                    contentPadding: const EdgeInsets.all(15),
+                    title: Text(_events[index]['name'],style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    subtitle: Text(_events[index]['venue']['location']['address']['city'] + '\n' + _events[index]['event_date']['value']),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => EventsDetail()),
+                      );
+                    },
+                ),
               ),
             ),
           ]

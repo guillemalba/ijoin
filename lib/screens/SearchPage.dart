@@ -230,8 +230,8 @@ class _SearchState extends State<SearchPage>{
               itemCount: _events.length,
               shrinkWrap: true ,
               itemBuilder: (context, index) => ListTile(
-                  contentPadding: const EdgeInsets.only(top: 10, bottom: 10),
-                title: Text(_events[index]['name']),
+                  contentPadding: const EdgeInsets.only(top: 10, bottom: 10,left:20, right:20),
+                title: Text(_events[index]['name'],style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 subtitle: Text(_events[index]['venue']['location']['address']['city'] + '\n' + _events[index]['event_date']['value'])
               )
             ),
