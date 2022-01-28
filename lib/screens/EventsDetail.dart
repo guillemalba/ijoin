@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:ijoin/screens/HomePage.dart';
 
 class EventsDetail extends StatelessWidget {
-  //final String text;
-  final Event event;
-  const EventsDetail({Key? key, required this.event}) : super(key: key);
+  final String text;
+  //final Event event;
+  const EventsDetail({Key? key, required this.text}) : super(key: key);
 
   
   @override
@@ -29,7 +29,8 @@ class EventsDetail extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget> [
                       Text(
-                        event.name,
+                        //event.name,
+                        text,
                         style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height:50),

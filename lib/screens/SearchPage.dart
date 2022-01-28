@@ -121,7 +121,7 @@ class _SearchState extends State<SearchPage>{
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
       elevation: 0,
-      title: const Text("Search"),
+      title: const Text("Searcher"),
       centerTitle: true,
     ),
     body: Center(
@@ -136,8 +136,8 @@ class _SearchState extends State<SearchPage>{
             children: [
               Container(
                 width: double.infinity,
-                height: 50,
-                margin: const EdgeInsets.only(top: 20.0),
+                height: 100,
+                margin: const EdgeInsets.only(top: 30.0, left: 20, right:20 ),
                 child: SizedBox(
                   child: TextFormField(
                     decoration: const InputDecoration(
@@ -175,11 +175,13 @@ class _SearchState extends State<SearchPage>{
                         onPressed: () {
                           _openAddEntryDialog();
                         },
-                        child: Text('Filters')
+                        child: Text('Add filters')
+
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
+                          const SizedBox(height: 30),
                           Text((() {
                             if(location != null) {
                               return location + ' - ';
@@ -218,6 +220,7 @@ class _SearchState extends State<SearchPage>{
                         final isValid = _formKey.currentState?.validate();
                         if (isValid!) {
                           searchEvent(event, locationId, typeId);
+                          const Text("Results:\n");
                           //widget.onSearch(event, location);
                         }
                       },
@@ -225,11 +228,15 @@ class _SearchState extends State<SearchPage>{
                   ),
                 ),
               ),
+              const SizedBox(height: 25),
+              const Text("Results:",style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.redAccent)),
+              const SizedBox(height: 30),
             ],
           ),
         ),
           _events.isEmpty ? Text('No results to display')
           : Expanded(
+            //child: const Text("hola"),
             child: ListView.builder(
               controller: _controller,//new line
               itemCount: _events.length,
