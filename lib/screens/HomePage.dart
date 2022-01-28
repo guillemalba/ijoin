@@ -10,10 +10,17 @@ class HomePage extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
+class Event {
+  final String name;
+  final String location;
+  final String date;
+  const Event(this.name,this.location, this.date);
+}
 
 class _HomeState extends State<HomePage>{
   late ScrollController _controller;
   List _events = [];
+  late Event event;
 
   void searchEvent(var location) async {
     final response = await widget.dio.get(
@@ -71,13 +78,16 @@ class _HomeState extends State<HomePage>{
                 itemCount: _events.length,
                 shrinkWrap: true ,
                 itemBuilder: (context, index) => ListTile(
-                    contentPadding: const EdgeInsets.all(15),
+                   contentPadding: const EdgeInsets.all(15),
                     title: Text(_events[index]['name'],style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                     subtitle: Text(_events[index]['venue']['location']['address']['city'] + '\n' + _events[index]['event_date']['value']),
                     onTap: () {
+                      /*event.name = _events[index]['name'];
+                      event.location = _events[index]['venue']['location']['address']['city'];
+                      event.date = _events[index]['event_date']['value'];*/
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => EventsDetail()),
+                        MaterialPageRoute(builder: (context) => EventsDetail(text: 'Evento: \n\n' + _events[index]['name'] + '\n\n' + 'Ubicación: \n\n' + _events[index]['venue']['location']['address']['city'] + '\n\n' + 'Fecha: \n\n' + _events[index]['event_date']['value'] )),
                       );
                     },
                 ),

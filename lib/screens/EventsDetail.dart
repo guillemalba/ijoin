@@ -2,7 +2,10 @@
 import 'package:flutter/material.dart';
 
 class EventsDetail extends StatelessWidget {
-  const EventsDetail({Key? key}) : super(key: key);
+  final String text;
+  const EventsDetail({Key? key,required this.text}) : super(key: key);
+
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +26,14 @@ class EventsDetail extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget> [
+                      //Text(events.name),
+                      //Text(events.location),
+                      //Text(events.date),
+                      Text(
+                        text,
+                        style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height:50),
                       TextButton(
                           style: TextButton.styleFrom(
                               padding: const EdgeInsets.all(15.0),
