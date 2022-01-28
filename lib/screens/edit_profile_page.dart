@@ -37,6 +37,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   String? _lastName;
   String? _email;
   String? _profilePic;
+  String? _country;
 
   File? image;
   PickedFile? _imageFile;
@@ -59,6 +60,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final secondNameEditingController = TextEditingController();
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
+  final countryController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -73,14 +75,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
         centerTitle: true,
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 16, top: 25, right: 16),
+        padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
         child: GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
           },
           child: ListView(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Center(
@@ -90,12 +92,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 55,
               ),
               TextField(
                 controller: firstNameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     contentPadding: EdgeInsets.only(bottom: 3),
                     labelText: "First Name",
                     floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -105,12 +107,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       color: Colors.black,
                     )),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 35,
               ),
               TextField(
                 controller: lastNameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     contentPadding: EdgeInsets.only(bottom: 3),
                     labelText: "Last Name",
                     floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -121,9 +123,36 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     )),
               ),
               SizedBox(
+                height: 35,
+              ),
+              TextField(
+                controller: countryController,
+                decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.only(bottom: 3),
+                    labelText: "Country",
+                    floatingLabelBehavior: FloatingLabelBehavior.always,
+                    hintText: "Country",
+                    hintStyle: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                    )),
+              ),
+              SizedBox(
                 height: 75,
               ),
-              buildSaveButton(),
+
+              TextButton(
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.all(15),
+                    primary: Colors.white,
+                    backgroundColor: Colors.redAccent,
+                    fixedSize: Size.fromWidth(MediaQuery.of(context).size.width),
+                  ),
+                  onPressed: () {
+                    saveToFirebase();
+                  },
+                  child: Text('Save')
+              ),
             ],
           ),
         ),
@@ -266,6 +295,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       _lastName = snapshot.get('lastName');
       _email = snapshot.get('email');
       _profilePic = snapshot.get('profilePic');
+      _country = snapshot.get('country');
     }
   }
 
@@ -288,6 +318,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             'lastName': lastNameController.text,
             'profilePic': _imageFile!.path,
             'uid': user.uid.toString(),
+            'country': countryController.text,
         });
     Fluttertoast.showToast(msg: "Information updated successful");
     Navigator.push(

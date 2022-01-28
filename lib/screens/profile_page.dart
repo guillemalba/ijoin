@@ -30,6 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String? _lastName;
   String? _email;
   String? _profilePic;
+  String? _country;
 
   @override
   void initState() {
@@ -104,16 +105,63 @@ class _ProfilePageState extends State<ProfilePage> {
             overflow: TextOverflow.ellipsis,
             style: TextStyle(color: Colors.black54, fontWeight: FontWeight.w500),
           ),
+          const SizedBox(height:20),
+
+
+          const Text(
+            'Country',
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+
+          Text(
+            '${_country}',
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(color: Colors.black54, fontWeight: FontWeight.w500),
+          ),
 
           //buildEmail(user),
           const SizedBox(height:24),
-          Center(child:buildEditButton()),
-          const SizedBox(height: 15),
-          ActionChip(
-              label: const Text("Logout"),
-              onPressed: () {
-                logout(context);
-              }),
+          Container(
+            margin: const EdgeInsets.only(top: 20.0, bottom: 10, left: 20, right: 20),
+            child: Column(
+                children: <Widget> [
+                  TextButton(
+                      style: TextButton.styleFrom(
+                          padding: const EdgeInsets.all(15),
+                          primary: Colors.redAccent,
+                          backgroundColor: Colors.white,
+                          fixedSize: Size.fromWidth(MediaQuery.of(context).size.width),
+                        side: BorderSide(
+                          width: 2.0,
+                          color: Colors.redAccent,
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context)=> EditProfilePage()),
+                        );
+                      },
+                      child: Text('Edit Profile')
+                  ),
+                  const SizedBox(height: 15),
+                  TextButton(
+                      style: TextButton.styleFrom(
+                          padding: const EdgeInsets.all(15),
+                          primary: Colors.white,
+                          backgroundColor: Colors.redAccent,
+                          fixedSize: Size.fromWidth(MediaQuery.of(context).size.width),
+                      ),
+                      onPressed: () {
+                        logout(context);
+                      },
+                      child: Text('Logout')
+                  ),
+                ],
+            ),
+          ),
         ],
       ),
     );
@@ -180,13 +228,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
     final docUser = FirebaseFirestore.instance.collection('users').doc(user!.uid.toString());
     final snapshot = await docUser.get();
+
     if (snapshot.exists) {
-
-
       _firstName = snapshot.get('firstName');
       _lastName = snapshot.get('lastName');
       _email = snapshot.get('email');
       _profilePic = snapshot.get('profilePic');
+      _country = snapshot.get('country');
     }
   }
 

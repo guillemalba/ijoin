@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
       const Icon(Icons.home, size: 30, color: Colors.white, semanticLabel: "Home"),
       const Icon(Icons.task, size: 30, color: Colors.white, semanticLabel: "My Events"),
       const Icon(Icons.search, size: 30, color: Colors.white, semanticLabel: "Search"),
-      const Icon(Icons.supervised_user_circle, size: 30, color: Colors.white, semanticLabel: "Profile"),
+      const Icon(Icons.account_circle, size: 30, color: Colors.white, semanticLabel: "Profile"),
     ];
 
     return Scaffold(

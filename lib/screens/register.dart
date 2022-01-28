@@ -29,6 +29,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final emailEditingController = TextEditingController();
   final passwordEditingController = TextEditingController();
   final confirmPasswordEditingController = TextEditingController();
+  final countryEditingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -165,6 +166,33 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ),
         ));
 
+    final countryField = TextFormField(
+        autofocus: false,
+        controller: countryEditingController,
+        keyboardType: TextInputType.name,
+        validator: (value) {
+          RegExp regex = RegExp(r'^.{3,}$');
+          if (value!.isEmpty) {
+            return ("Country cannot be Empty");
+          }
+          if (!regex.hasMatch(value)) {
+            return ("Enter Valid Country (Min. 3 Character)");
+          }
+          return null;
+        },
+        onSaved: (value) {
+          countryEditingController.text = value!;
+        },
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          prefixIcon: const Icon(Icons.location_on_sharp),
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: "Country",
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ));
+
     //signup button
     final signUpButton = Material(
       elevation: 5,
@@ -214,6 +242,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     passwordField,
                     const SizedBox(height: 20),
                     confirmPasswordField,
+                    const SizedBox(height: 20),
+                    countryField,
                     const SizedBox(height: 20),
                     signUpButton,
                     const SizedBox(height: 45),
@@ -299,6 +329,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     userModel.uid = user.uid;
     userModel.firstName = firstNameEditingController.text;
     userModel.lastName = secondNameEditingController.text;
+    userModel.country = countryEditingController.text;
     userModel.profilePic = null;
 
     await firebaseFirestore
