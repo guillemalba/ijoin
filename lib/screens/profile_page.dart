@@ -218,7 +218,7 @@ class _ProfilePageState extends State<ProfilePage> {
             child: ClipOval(
               child: Image.file(
                 File(_profilePic!),
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
                 width: 140.0,
                 height: 140.0,
               ),
