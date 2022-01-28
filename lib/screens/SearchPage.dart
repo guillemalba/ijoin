@@ -136,8 +136,60 @@ class _SearchState extends State<SearchPage>{
             children: [
               Container(
                 width: double.infinity,
+                margin: const EdgeInsets.only(top: 20.0, bottom: 10, left: 20, right: 20),
+                child: SizedBox(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget> [
+                      TextButton(
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.all(15),
+                            primary: Colors.redAccent,
+                            backgroundColor: Colors.transparent,
+                            fixedSize: Size.fromWidth(MediaQuery.of(context).size.width),
+                            side: BorderSide(
+                              width: 2.0,
+                              color: Colors.redAccent,
+                            ),
+                          ),
+                          onPressed: () {
+                            _openAddEntryDialog();
+                          },
+                          child: Text('Add filters')
+
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          const SizedBox(height: 30),
+                          Text((() {
+                            if(location != null) {
+                              return location + ' - ';
+                            }
+                            return '';
+                          })()),
+                          Expanded(child:
+                          Text((() {
+                            if(type.isNotEmpty) {
+                              var typeText = type[0];
+                              for (int i = 1; i < type.length; i++) {
+                                typeText = typeText + ', ' + type[i];
+                              }
+                              return typeText;
+                            }
+                            return '';
+                          })()),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                width: double.infinity,
                 height: 100,
-                margin: const EdgeInsets.only(top: 30.0, left: 20, right:20 ),
+                margin: const EdgeInsets.only(left: 20, right:20 ),
                 child: SizedBox(
                   child: TextFormField(
                     decoration: const InputDecoration(
@@ -158,54 +210,7 @@ class _SearchState extends State<SearchPage>{
                   ),
                 ),
               ),
-              Container(
-                width: double.infinity,
-                margin: const EdgeInsets.only(top: 20.0, bottom: 10, left: 20, right: 20),
-                child: SizedBox(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget> [
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          padding: const EdgeInsets.all(15.0),
-                          primary: Colors.white,
-                          backgroundColor: Colors.redAccent,
-                          fixedSize: Size.fromWidth(MediaQuery.of(context).size.width)
-                        ),
-                        onPressed: () {
-                          _openAddEntryDialog();
-                        },
-                        child: Text('Add filters')
 
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          const SizedBox(height: 30),
-                          Text((() {
-                            if(location != null) {
-                              return location + ' - ';
-                            }
-                            return '';
-                          })()),
-                          Expanded(child:
-                            Text((() {
-                              if(type.isNotEmpty) {
-                                var typeText = type[0];
-                                for (int i = 1; i < type.length; i++) {
-                                  typeText = typeText + ', ' + type[i];
-                                }
-                                return typeText;
-                              }
-                              return '';
-                            })()),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              ),
               Container(
                 width: double.infinity,
                 margin: const EdgeInsets.only(bottom: 20.0, left: 20, right: 20),

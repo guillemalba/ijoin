@@ -44,13 +44,12 @@ class EventsDetail extends StatelessWidget {
                           ),
                           onPressed: () {
                             //saveEvent();
-
                             Fluttertoast.showToast(msg: "Event Saved Succesfully");
-                            Navigator.push(
+                            /*Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => SeeAll()),
                               //(event: event)),
-                            );
+                            );*/
 
                           },
                           child: Text('Save Event', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
