@@ -28,7 +28,6 @@ class _HomeState extends State<HomePage>{
   late Event event;
 
   Future searchEvent() async {
-    print(_countryId);
     final response = await widget.dio.get(
       'https://app.ticketmaster.eu/mfxapi/v2/events?apikey=BgunvccCEQmfSA1pZ5a27XrLOGrZgE0t&rows=50', queryParameters: {
       'country_ids': _countryId,
@@ -115,7 +114,6 @@ class _HomeState extends State<HomePage>{
                    contentPadding: const EdgeInsets.all(15),
                     title: Text(_events[index]['name'],style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                     subtitle: Text(_events[index]['venue']['location']['address']['city'] + '\n' + _events[index]['event_date']['value']),
-
                     onTap: () {
 
                       /*event.name = _events[index]['name'];
