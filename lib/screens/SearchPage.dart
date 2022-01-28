@@ -3,6 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:ijoin/model/event.dart';
 import 'package:ijoin/screens/filtros.dart';
 
+import 'EventsDetail.dart';
+
 class SearchPage extends StatefulWidget {
   final dio = Dio();
 
@@ -244,7 +246,14 @@ class _SearchState extends State<SearchPage>{
               itemBuilder: (context, index) => ListTile(
                   contentPadding: const EdgeInsets.only(top: 10, bottom: 10,left:20, right:20),
                 title: Text(_events[index]['name'],style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                subtitle: Text(_events[index]['venue']['location']['address']['city'] + '\n' + _events[index]['event_date']['value'])
+                subtitle: Text(_events[index]['venue']['location']['address']['city'] + '\n' + _events[index]['event_date']['value']),
+                  onTap: () {
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => EventsDetail(text: 'Evento: \n\n' + _events[index]['name'] + '\n\n' + 'Ubicación: \n\n' + _events[index]['venue']['location']['address']['city'] + '\n\n' + 'Fecha: \n\n' + _events[index]['event_date']['value'] )),
+                  //(event: event)),
+            );
+          },
               )
             ),
           ),
