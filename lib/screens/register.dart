@@ -1,5 +1,6 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:ijoin/model/user.dart';
 import 'package:ijoin/screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,7 +20,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   // string for displaying the error Message
   String? errorMessage;
-
 
   // our form key
   final _formKey = GlobalKey<FormState>();
@@ -244,6 +244,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     confirmPasswordField,
                     const SizedBox(height: 20),
                     countryField,
+
+                    /*Center(
+                      child: DropdownButton<String>(
+                        value: value,
+                        items: items.map(buildMenuItem).toList(),
+                        onChanged: (value) => setState(() => this.value = value),
+                      ),
+                    ),*/
+
+
                     const SizedBox(height: 20),
                     signUpButton,
                     const SizedBox(height: 45),
@@ -277,6 +287,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       ),
     );
   }
+
+  /*DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
+      value: item,
+      child: Text(
+        item,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+
+      ),
+  );*/
+
   void signUp(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
@@ -314,6 +334,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       }
     }
   }
+
   postDetailsToFirestore() async {
     // calling our firestore
     // calling our user model

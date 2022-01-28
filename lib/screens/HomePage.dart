@@ -59,7 +59,7 @@ class _HomeState extends State<HomePage>{
 
     setState(() {
       for (int i = 0; i < response.data['countries'].length; i++) {
-        if (response.data['countries'][i]['name'].toString().toLowerCase() == _country) {
+        if (response.data['countries'][i]['name'].toString() == _country) {
           _countryId = response.data['countries'][i]['id'];
         }
       }
