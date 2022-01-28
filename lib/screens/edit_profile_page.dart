@@ -58,14 +58,91 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   final firstNameEditingController = TextEditingController();
   final secondNameEditingController = TextEditingController();
+  final countryEditingController = TextEditingController();
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
-  final countryController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
 
     readUser();
+
+    //first name field
+    final firstNameField = TextFormField(
+        autofocus: false,
+        controller: firstNameEditingController,
+        keyboardType: TextInputType.name,
+        validator: (value) {
+          RegExp regex = RegExp(r'^.{3,}$');
+          if (value!.isEmpty) {
+            return ("First Name cannot be Empty");
+          }
+          if (!regex.hasMatch(value)) {
+            return ("Enter Valid name(Min. 3 Character)");
+          }
+          return null;
+        },
+        onSaved: (value) {
+          firstNameEditingController.text = value!;
+        },
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          prefixIcon: const Icon(Icons.account_circle),
+          labelText: "First Name",
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: '$_firstName',
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ));
+
+    final lastNameField = TextFormField(
+        autofocus: false,
+        controller: secondNameEditingController,
+        keyboardType: TextInputType.name,
+        validator: (value) {
+          if (value!.isEmpty) {
+            return ("Last Name cannot be Empty");
+          }
+          return null;
+        },
+        onSaved: (value) {
+          secondNameEditingController.text = value!;
+        },
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          prefixIcon: const Icon(Icons.account_circle),
+          labelText: "Last Name",
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: '$_lastName',
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ));
+
+    final countryField = TextFormField(
+        autofocus: false,
+        controller: countryEditingController,
+        keyboardType: TextInputType.name,
+        validator: (value) {
+          if (value!.isEmpty) {
+            return ("Country cannot be Empty");
+          }
+          return null;
+        },
+        onSaved: (value) {
+          countryEditingController.text = value!;
+        },
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          prefixIcon: const Icon(Icons.location_on_sharp),
+          labelText: "Country",
+          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: '$_country',
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ));
 
     return Scaffold (
       appBar: AppBar(
@@ -95,51 +172,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
               const SizedBox(
                 height: 55,
               ),
-              TextField(
-                controller: firstNameController,
-                decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.only(bottom: 3),
-                    labelText: "First Name",
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                    hintText: 'First Name',
-                    hintStyle: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                    )),
-              ),
-              const SizedBox(
-                height: 35,
-              ),
-              TextField(
-                controller: lastNameController,
-                decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.only(bottom: 3),
-                    labelText: "Last Name",
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                    hintText: "Last Name",
-                    hintStyle: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                    )),
-              ),
-              SizedBox(
-                height: 35,
-              ),
-              TextField(
-                controller: countryController,
-                decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.only(bottom: 3),
-                    labelText: "Country",
-                    floatingLabelBehavior: FloatingLabelBehavior.always,
-                    hintText: "Country",
-                    hintStyle: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                    )),
-              ),
-              SizedBox(
-                height: 75,
-              ),
+              firstNameField,
+              const SizedBox(height: 35,),
+              lastNameField,
+              const SizedBox(height: 35,),
+              countryField,
+              const SizedBox(height: 75,),
 
               TextButton(
                   style: TextButton.styleFrom(
@@ -151,7 +189,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   onPressed: () {
                     saveToFirebase();
                   },
-                  child: Text('Save')
+                  child: const Text('Save')
               ),
             ],
           ),
@@ -200,6 +238,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ? const CircleAvatar(
           backgroundColor: Colors.black12,
           radius: 80,
+
         )
             : CircleAvatar(
           radius: 80.0,
@@ -309,16 +348,28 @@ class _EditProfilePageState extends State<EditProfilePage> {
   saveToFirebase() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
+    if (_imageFile != null) {
+      _profilePic = _imageFile!.path;
+    }
+    if (firstNameEditingController.text.isNotEmpty) {
+      _firstName = firstNameEditingController.text;
+    }
+    if (lastNameController.text.isNotEmpty) {
+      _lastName = lastNameController.text;
+    }
+    if (countryEditingController.text.isNotEmpty) {
+      _country = countryEditingController.text;
+    }
     await firebaseFirestore
         .collection("users")
         .doc(user!.uid.toString())
         .set({
             'email': user.email,
-            'firstName': firstNameController.text,
-            'lastName': lastNameController.text,
-            'profilePic': _imageFile!.path,
+            'firstName': _firstName,
+            'lastName': _lastName,
+            'profilePic': _profilePic,
             'uid': user.uid.toString(),
-            'country': countryController.text,
+            'country': _country,
         });
     Fluttertoast.showToast(msg: "Information updated successful");
     Navigator.push(
