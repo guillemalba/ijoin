@@ -42,7 +42,7 @@ class _FiltrosState extends State<FiltrosScreen> {
     builder: (context) {
       final _multipleNotifier = Provider.of<MultipleNotifier>(context);
       return AlertDialog(
-        title: Text("Select one type or many types"),
+        title: Text("Select one or many categories"),
         content: SingleChildScrollView(
           child: Container(
             width: double.infinity,
@@ -212,7 +212,7 @@ class _FiltrosState extends State<FiltrosScreen> {
                 child:
                 TextButton.icon(
                   icon: const Icon(Icons.view_list),
-                  label: const Text('Choose the event type'),
+                  label: const Text('Choose the event category'),
                   onPressed: () {
                     searchCategories();
                   },

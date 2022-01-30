@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ijoin/screens/EventsDetail.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   final dio = new Dio();
@@ -105,11 +106,11 @@ class _HomeState extends State<HomePage>{
                 itemBuilder: (context, index) => ListTile(
                   contentPadding: const EdgeInsets.all(15),
                   title: Text(_events[index]['name'],style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  subtitle: Text(_events[index]['venue']['location']['address']['city'] + '\n' + _events[index]['event_date']['value']),
+                  subtitle: Text(_events[index]['venue']['location']['address']['city'] + '\n' + DateFormat('yyyy-MM-dd').format(DateTime.parse(_events[index]['event_date']['value']))),
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => EventsDetail(text: 'Event: ' + _events[index]['name'] + '\n\n' + 'Location: ' + _events[index]['venue']['name'] + ', ' + _events[index]['venue']['location']['address']['city'] + '\n\n' + 'Date: ' + _events[index]['event_date']['value'] + '\n\n' + 'Category: ' + _events[index]['categories'][0]['name'], image: _events[index]['images']['large']['url'])),
+                      MaterialPageRoute(builder: (context) => EventsDetail(text: 'Event: ' + _events[index]['name'] + '\n\n' + 'Location: ' + _events[index]['venue']['name'] + ', ' + _events[index]['venue']['location']['address']['city'] + '\n\n' + 'Date: ' + DateFormat('yyyy-MM-dd HH:mm').format(DateTime.parse(_events[index]['event_date']['value'])) + '\n\n' + 'Category: ' + _events[index]['categories'][0]['name'], image: _events[index]['images']['large']['url'])),
                     //(event: event)),
                     );
                   },
