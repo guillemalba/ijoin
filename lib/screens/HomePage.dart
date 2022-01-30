@@ -122,7 +122,7 @@ class _HomeState extends State<HomePage>{
 
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => EventsDetail(text: 'Evento: \n\n' + _events[index]['name'] + '\n\n' + 'Ubicación: \n\n' + _events[index]['venue']['location']['address']['city'] + '\n\n' + 'Fecha: \n\n' + _events[index]['event_date']['value'] )),
+                        MaterialPageRoute(builder: (context) => EventsDetail(text: 'Event: ' + _events[index]['name'] + '\n\n' + 'Location: ' + _events[index]['venue']['location']['address']['city'] + '\n\n' + 'Date: ' + _events[index]['event_date']['value'])),
                       //(event: event)),
                       );
                     },
