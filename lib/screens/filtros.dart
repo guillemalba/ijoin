@@ -4,6 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:provider/provider.dart';
 import 'notifier.dart';
 
+/*
+Página de los filtros de búsqueda
+*/
 class FiltrosScreen extends StatefulWidget {
   final dio = Dio();
 
@@ -17,13 +20,10 @@ class _FiltrosState extends State<FiltrosScreen> {
   List _currentEvent = [];
   List _categories = [];
 
-  void callDatePicker() async{
-    var selectedDate = await getDatePickerWidget();
-    setState(() {
-      _currentSelectedDate = selectedDate;
-    });
-  }
 
+  /*
+  Para guardar todas las categorías
+  */
   void searchCategories() async {
     final response = await widget.dio.get(
         'https://app.ticketmaster.eu/mfxapi/v2/categories?apikey=BgunvccCEQmfSA1pZ5a27XrLOGrZgE0t');
@@ -36,7 +36,9 @@ class _FiltrosState extends State<FiltrosScreen> {
     });
   }
 
-  //MULTI
+  /*
+  Para seleccionar las categorías a partir de un dialog de multiselección
+  */
   _showMultiChoiceDialog(BuildContext context) => showDialog(
     context: context,
     builder: (context) {
@@ -76,7 +78,9 @@ class _FiltrosState extends State<FiltrosScreen> {
   );
 
 
-  //PAIS
+  /*
+  Para escribir el país a partir de un dialog
+  */
   _showAddCityDialog(BuildContext context) => showDialog(
     context: context,
     builder: (context) {
@@ -113,7 +117,16 @@ class _FiltrosState extends State<FiltrosScreen> {
     },
   );
 
-  //DATA
+  /*
+  Para seleccionar el día
+  */
+  void callDatePicker() async{
+    var selectedDate = await getDatePickerWidget();
+    setState(() {
+      _currentSelectedDate = selectedDate;
+    });
+  }
+
   Future<DateTime?> getDatePickerWidget() {
     return showDatePicker(
       context: context,
@@ -166,6 +179,8 @@ class _FiltrosState extends State<FiltrosScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
+
+            //Botón para seleccionar el día
             Container(
               margin: const EdgeInsets.all(20),
               child: SizedBox(
@@ -185,6 +200,8 @@ class _FiltrosState extends State<FiltrosScreen> {
                 ),
               )
             ),
+
+            //Botón para seleccionar el país
             Container(
               margin: const EdgeInsets.only(bottom: 20.0, left: 20, right: 20),
               child: SizedBox(
@@ -204,6 +221,8 @@ class _FiltrosState extends State<FiltrosScreen> {
                 ),
               )
             ),
+
+            //Botón para seleccionar las categorías
             Container(
               margin: const EdgeInsets.only(bottom: 20.0, left: 20, right: 20),
               child: SizedBox(

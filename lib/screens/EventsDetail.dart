@@ -1,9 +1,9 @@
-//Página de Events Detail
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import 'SeeAll.dart';
-
+/*
+Página para ver los detalles de un evento
+*/
 class EventsDetail extends StatelessWidget {
   final String text;
   final String image;
@@ -24,6 +24,8 @@ class EventsDetail extends StatelessWidget {
           ),
         ),
       ),
+
+      //botón para guardar el evento
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(top: 10, bottom: 10, left: 9, right: 9),
         child: TextButton(
@@ -49,6 +51,9 @@ class EventsDetail extends StatelessWidget {
     );
   }
 
+  /*
+  Mostramos la información del evento
+  */
   Widget cardBodyView(String text) {
     return Container(
       margin: const EdgeInsets.only(top: 0.0, bottom: 10, left: 20, right: 20),

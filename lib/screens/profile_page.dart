@@ -1,20 +1,19 @@
-//Página del Profile
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ijoin/model/user.dart';
 import 'package:ijoin/screens/edit_profile_page.dart';
-
 import 'login.dart';
 
+/*
+Página del perfil
+*/
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
   @override
   _ProfilePageState createState() =>_ProfilePageState();
-
 }
 
 class _ProfilePageState extends State<ProfilePage> {

@@ -1,7 +1,4 @@
-//Página del Edit Profile
-
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,8 +8,9 @@ import 'package:ijoin/model/user.dart';
 import 'package:ijoin/screens/home.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'HomePage.dart';
-
+/*
+Página para editar el perfil
+*/
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({Key? key}) : super(key: key);
 

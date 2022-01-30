@@ -1,6 +1,8 @@
-//Página del my Events
 import 'package:flutter/material.dart';
 
+/*
+Página de mis eventos guardados
+*/
 class MyEventsPage extends StatelessWidget {
   const MyEventsPage({Key? key}) : super(key: key);
   @override

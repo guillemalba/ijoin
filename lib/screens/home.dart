@@ -9,6 +9,9 @@ import 'profile_page.dart';
 import 'SearchPage.dart';
 import 'login.dart';
 
+/*
+Para la navegación de las páginas
+*/
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 

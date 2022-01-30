@@ -3,9 +3,11 @@ import 'package:dio/dio.dart';
 import 'package:ijoin/model/event.dart';
 import 'package:ijoin/screens/filtros.dart';
 import 'package:intl/intl.dart';
+import 'package:ijoin/screens/EventsDetail.dart';
 
-import 'EventsDetail.dart';
-
+/*
+Página de búsqueda
+*/
 class SearchPage extends StatefulWidget {
   final dio = Dio();
 
@@ -15,7 +17,6 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchState extends State<SearchPage>{
-  late ScrollController _controller;
   List _events = [];
   final _formKey = GlobalKey<FormState>();
   var event;
@@ -25,6 +26,9 @@ class _SearchState extends State<SearchPage>{
   List categoryId = [];
   var date;
 
+  /*
+  Función para buscar el evento en la API. Añade los parámetros de los filtros a la query, para poder acotar la búsqueda.
+  */
   void searchEvent() async {
     var nextDay, formattedDate;
     if (date != null) {
@@ -52,6 +56,9 @@ class _SearchState extends State<SearchPage>{
     });
   }
 
+  /*
+  Función para encontrar el id del país
+  */
   void searchCountry() async {
     final response = await widget.dio.get(
         'https://app.ticketmaster.eu/mfxapi/v2/countries?apikey=BgunvccCEQmfSA1pZ5a27XrLOGrZgE0t');
@@ -65,6 +72,9 @@ class _SearchState extends State<SearchPage>{
     });
   }
 
+  /*
+  Función para encontrar el id de las categorias
+  */
   void searchCategory() async {
     final response = await widget.dio.get(
         'https://app.ticketmaster.eu/mfxapi/v2/categories?apikey=BgunvccCEQmfSA1pZ5a27XrLOGrZgE0t');
@@ -81,6 +91,9 @@ class _SearchState extends State<SearchPage>{
     });
   }
 
+  /*
+  Función para mostrar la pantalla de los filtros
+  */
   Future _openAddEntryDialog() async {
     EventFilter? save = await Navigator.of(context).push(MaterialPageRoute<EventFilter>(
         builder: (BuildContext context) {
@@ -98,27 +111,6 @@ class _SearchState extends State<SearchPage>{
   }
 
   @override
-  void initState() {
-    _controller = ScrollController();
-    _controller.addListener(_scrollListener);//the listener for up and down.
-    super.initState();
-  }
-
-  _scrollListener() {
-    if (_controller.offset >= _controller.position.maxScrollExtent &&
-        !_controller.position.outOfRange) {
-      setState(() {//you can do anything here
-      });
-    }
-    if (_controller.offset <= _controller.position.minScrollExtent &&
-        !_controller.position.outOfRange) {
-      setState(() {//you can do anything here
-      });
-    }
-  }
-
-
-  @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
       elevation: 0,
@@ -129,121 +121,130 @@ class _SearchState extends State<SearchPage>{
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-        Form(
-          key: _formKey,
-          autovalidateMode: AutovalidateMode.always,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-              width: double.infinity,
-                margin: const EdgeInsets.only(top: 20.0, bottom: 10, left: 20, right: 20),
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    padding: const EdgeInsets.all(15),
-                    primary: Colors.redAccent,
-                    backgroundColor: Colors.transparent,
-                    fixedSize: Size.fromWidth(MediaQuery.of(context).size.width),
-                    side: const BorderSide(
-                      width: 2.0,
-                      color: Colors.redAccent,
-                    ),
-                  ),
-                  onPressed: () {
-                    _openAddEntryDialog();
-                  },
-                  child: Text('Add filters')
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                margin: const EdgeInsets.only(bottom: 10, left: 20, right: 20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget> [
-                    if (location != null) ...[
-                      Text(location)
-                    ],
-                    if (date != null) ...[
-                      Text(DateFormat('yyyy-MM-dd').format(date))
-                    ],
-                    if (category.isNotEmpty) ...[
-                      Text(category.join(", "))
-                    ]
-                  ],
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 100,
-                margin: const EdgeInsets.only(left: 20, right:20 ),
-                child: SizedBox(
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.search),
-                      hintText: 'Write an event...',
-                      border: OutlineInputBorder(),
-                      filled: true,
-                    ),
-                    onChanged: (value) {
-                      event = value;
-                    },
-                    validator: (value) {
-                      if (value != null && value.isEmpty) {
-                        return 'Please write an event to search';
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                margin: const EdgeInsets.only(bottom: 10.0, left: 20, right: 20),
-                child: SizedBox(
-                  child: TextButton(
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.all(15.0),
-                        primary: Colors.white,
-                        backgroundColor: Colors.redAccent,
-                      ),
-                      onPressed: () {
-                        final isValid = _formKey.currentState?.validate();
-                        if (isValid!) {
-                          searchEvent();
-                          const Text("Results:\n");
-                          //widget.onSearch(event, location);
-                        }
-                      },
-                      child: Text('Search')
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              const Text("Results:",style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.redAccent)),
-              const SizedBox(height: 10),
-            ],
-          ),
-        ),
+          Form(
+            key: _formKey,
+            autovalidateMode: AutovalidateMode.always,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
 
+                //botón añadir filtros
+                Container(
+                width: double.infinity,
+                  margin: const EdgeInsets.only(top: 20.0, bottom: 10, left: 20, right: 20),
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.all(15),
+                      primary: Colors.redAccent,
+                      backgroundColor: Colors.transparent,
+                      fixedSize: Size.fromWidth(MediaQuery.of(context).size.width),
+                      side: const BorderSide(
+                        width: 2.0,
+                        color: Colors.redAccent,
+                      ),
+                    ),
+                    onPressed: () {
+                      _openAddEntryDialog();
+                    },
+                    child: Text('Add filters')
+                  ),
+                ),
+
+                //mostrar filtros seleccionados
+                Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.only(bottom: 20, left: 20, right: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget> [
+                      if (location != null) ...[
+                        Text(location)
+                      ],
+                      if (date != null) ...[
+                        Text(DateFormat('yyyy-MM-dd').format(date))
+                      ],
+                      if (category.isNotEmpty) ...[
+                        Text(category.join(", "))
+                      ]
+                    ],
+                  ),
+                ),
+
+                //escribir el nombre del evento a buscar
+                Container(
+                  width: double.infinity,
+                  height: 100,
+                  margin: const EdgeInsets.only(left: 20, right:20 ),
+                  child: SizedBox(
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.search),
+                        hintText: 'Write an event...',
+                        border: OutlineInputBorder(),
+                        filled: true,
+                      ),
+                      onChanged: (value) {
+                        event = value;
+                      },
+                      validator: (value) {
+                        if (value != null && value.isEmpty) {
+                          return 'Please write an event to search';
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                ),
+
+                //botón buscar
+                Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.only(bottom: 10.0, left: 20, right: 20),
+                  child: SizedBox(
+                    child: TextButton(
+                        style: TextButton.styleFrom(
+                          padding: const EdgeInsets.all(15.0),
+                          primary: Colors.white,
+                          backgroundColor: Colors.redAccent,
+                        ),
+                        onPressed: () {
+                          final isValid = _formKey.currentState?.validate();
+                          if (isValid!) {
+                            searchEvent();
+                            const Text("Results:\n");
+                            //widget.onSearch(event, location);
+                          }
+                        },
+                        child: Text('Search')
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                const Text("Results:",style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.redAccent)),
+                const SizedBox(height: 10),
+              ],
+            ),
+          ),
+
+          //en el caso de que no haya resultados
           _events.isEmpty ? Text('No results to display')
+
+          //en el caso de que si haya resultados. Mostramos un listado de los eventos
           : Expanded(
-            //child: const Text("hola"),
             child: ListView.builder(
-              controller: _controller,//new line
               itemCount: _events.length,
               shrinkWrap: true ,
               itemBuilder: (context, index) => ListTile(
-                  contentPadding: const EdgeInsets.only(top: 10, bottom: 10,left:20, right:20),
+                contentPadding: const EdgeInsets.only(top: 10, bottom: 10,left:20, right:20),
                 title: Text(_events[index]['name'],style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 subtitle: Text(_events[index]['venue']['location']['address']['city'] + '\n' + _events[index]['event_date']['value']),
-                  onTap: () {
+                onTap: () {
                   Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => EventsDetail(text: 'Evento: \n\n' + _events[index]['name'] + '\n\n' + 'Ubicación: \n\n' + _events[index]['venue']['location']['address']['city'] + '\n\n' + 'Fecha: \n\n' + _events[index]['event_date']['value'], image: _events[index]['images']['large']['url'])),
                   //(event: event)),
-            );
-          },
+                  );
+                },
               )
             ),
           ),

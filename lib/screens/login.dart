@@ -1,10 +1,12 @@
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:ijoin/screens/HomePage.dart';
 import 'package:ijoin/screens/home.dart';
 import 'package:ijoin/screens/register.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+/*
+Página de login
+*/
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 

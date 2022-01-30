@@ -1,4 +1,3 @@
-//Página del Home
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
@@ -6,6 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ijoin/screens/EventsDetail.dart';
 import 'package:intl/intl.dart';
 
+/*
+Página principal
+*/
 class HomePage extends StatefulWidget {
   final dio = new Dio();
 
@@ -13,19 +15,15 @@ class HomePage extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-class Event {
-  late String name;
-  late String location;
-  late String date;
-}
-
 class _HomeState extends State<HomePage>{
-  late ScrollController _controller;
   List _events = [];
   var _country;
   var _countryId;
   User? user = FirebaseAuth.instance.currentUser;
 
+  /*
+  Para guardar todos los eventos de tu país
+  */
   Future searchEvent() async {
     final response = await widget.dio.get(
       'https://app.ticketmaster.eu/mfxapi/v2/events?apikey=BgunvccCEQmfSA1pZ5a27XrLOGrZgE0t&rows=50', queryParameters: {
@@ -41,6 +39,9 @@ class _HomeState extends State<HomePage>{
     });
   }
 
+  /*
+  Para saber el país del usuario
+  */
   Future readUser() async {
     final docUser = FirebaseFirestore.instance.collection('users').doc(user!.uid.toString());
     final snapshot = await docUser.get();
@@ -51,6 +52,9 @@ class _HomeState extends State<HomePage>{
     searchCountry();
   }
 
+  /*
+  Para guardar el id del país
+  */
   Future searchCountry() async {
     final response = await widget.dio.get(
         'https://app.ticketmaster.eu/mfxapi/v2/countries?apikey=BgunvccCEQmfSA1pZ5a27XrLOGrZgE0t');
@@ -68,22 +72,7 @@ class _HomeState extends State<HomePage>{
   @override
   void initState() {
     readUser();
-    _controller = ScrollController();
-    _controller.addListener(_scrollListener);//// the listener for up and down.
     super.initState();
-  }
-
-  _scrollListener() {
-    if (_controller.offset >= _controller.position.maxScrollExtent &&
-        !_controller.position.outOfRange) {
-      setState(() {//you can do anything here
-      });
-    }
-    if (_controller.offset <= _controller.position.minScrollExtent &&
-        !_controller.position.outOfRange) {
-      setState(() {//you can do anything here
-      });
-    }
   }
 
   @override
@@ -98,9 +87,10 @@ class _HomeState extends State<HomePage>{
         child: Column(
           children: <Widget>[
             const SizedBox(height:15),
+
+            //mostrar el listado de eventos
             Expanded(
               child: ListView.builder(
-                controller: _controller,//new line
                 itemCount: _events.length,
                 shrinkWrap: true ,
                 itemBuilder: (context, index) => ListTile(
