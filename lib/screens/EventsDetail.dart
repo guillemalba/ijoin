@@ -7,7 +7,6 @@ import 'SeeAll.dart';
 class EventsDetail extends StatelessWidget {
   final String text;
   final String image;
-  //final Event event;
   const EventsDetail({Key? key, required this.text, required this.image}) : super(key: key);
 
   @override
@@ -51,7 +50,6 @@ class EventsDetail extends StatelessWidget {
   }
 
   Widget cardBodyView(String text) {
-
     return Container(
       margin: const EdgeInsets.only(top: 0.0, bottom: 10, left: 20, right: 20),
       padding: const EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
@@ -64,10 +62,11 @@ class EventsDetail extends StatelessWidget {
         color: Colors.white,
         boxShadow: const [
           BoxShadow(
-              color: Colors.grey,
-              blurRadius: 5.0,
-              offset: Offset(1.0, 1.0),
-              spreadRadius: 1.0)
+            color: Colors.grey,
+            blurRadius: 5.0,
+            offset: Offset(1.0, 1.0),
+            spreadRadius: 1.0
+          )
         ],
       ),
       child: Column(
@@ -83,5 +82,4 @@ class EventsDetail extends StatelessWidget {
       ),
     );
   }
-
 }
