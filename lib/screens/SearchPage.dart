@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:ijoin/model/event.dart';
 import 'package:ijoin/screens/filtros.dart';
+import 'package:intl/intl.dart';
 
 import 'EventsDetail.dart';
 
@@ -25,6 +26,7 @@ class _SearchState extends State<SearchPage>{
   var date;
 
   void searchEvent(var name, var location, List type) async {
+    String formattedDate = DateFormat('yyyy-MM-ddTHH:mm:ssZ').format(date);
     var textType = null;
     if (type.isNotEmpty) {
       textType = type[0].toString();
@@ -38,8 +40,8 @@ class _SearchState extends State<SearchPage>{
       'event_name': name,
       'country_ids': location,
       'category_ids': textType,
-      'eventdate_from': date,
-      'eventdate_to': date
+      'eventdate_from': formattedDate,
+      //'eventdate_to': date
     });
 
     setState(() {
@@ -159,7 +161,7 @@ class _SearchState extends State<SearchPage>{
 
                       ),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           const SizedBox(height: 30),
                           Text((() {
@@ -169,17 +171,25 @@ class _SearchState extends State<SearchPage>{
                             return '';
                           })()),
                           Expanded(child:
-                          Text((() {
-                            if(type.isNotEmpty) {
-                              var typeText = type[0];
-                              for (int i = 1; i < type.length; i++) {
-                                typeText = typeText + ', ' + type[i];
+                            Text((() {
+                              if(type.isNotEmpty) {
+                                var typeText = type[0];
+                                for (int i = 1; i < type.length; i++) {
+                                  typeText = typeText + ', ' + type[i];
+                                }
+                                typeText = typeText + ' - ';
+                                return typeText;
                               }
-                              return typeText;
+                              return '';
+                            })()),
+                          ),
+                          Text((() {
+                            if(date != null) {
+                              String formattedDate = DateFormat('yyyy-MM-dd').format(date);
+                              return formattedDate;
                             }
                             return '';
                           })()),
-                          ),
                         ],
                       )
                     ],
@@ -213,7 +223,7 @@ class _SearchState extends State<SearchPage>{
 
               Container(
                 width: double.infinity,
-                margin: const EdgeInsets.only(bottom: 20.0, left: 20, right: 20),
+                margin: const EdgeInsets.only(bottom: 10.0, left: 20, right: 20),
                 child: SizedBox(
                   child: TextButton(
                       style: TextButton.styleFrom(
@@ -233,9 +243,9 @@ class _SearchState extends State<SearchPage>{
                   ),
                 ),
               ),
-              const SizedBox(height: 25),
+              const SizedBox(height: 20),
               const Text("Results:",style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.redAccent)),
-              const SizedBox(height: 30),
+              const SizedBox(height: 10),
             ],
           ),
         ),

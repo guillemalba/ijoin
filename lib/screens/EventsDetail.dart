@@ -17,50 +17,30 @@ class EventsDetail extends StatelessWidget {
         title: const Text("Events Detail"),
         centerTitle: true,
       ),
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.all(10),
-          child: Column(
-            children: <Widget>[
-              Container(
-                //width: double.infinity,
-                margin: const EdgeInsets.only(top: 20.0, bottom: 10),
-                child: SizedBox(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget> [
-                      const SizedBox(height:200),
-                      cardBodyView(text),
-                      const SizedBox(height:100),
-                      Container(
-                        margin: const EdgeInsets.only(top: 0.0, bottom: 10, left: 20, right: 20),
-                        padding: const EdgeInsets.only(top: 10, bottom: 10, left: 9, right: 9),
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                              padding: const EdgeInsets.all(15.0),
-                              primary: Colors.white,
-                              backgroundColor: Colors.redAccent,
-                              fixedSize: Size.fromWidth(MediaQuery.of(context).size.width)
-                          ),
-                          onPressed: () {
-                            //saveEvent();
-                            Fluttertoast.showToast(msg: "Event Saved Succesfully");
-                            /*Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => SeeAll()),
-                              //(event: event)),
-                            );*/
-
-                          },
-                          child: Text('Save Event', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+      body: SafeArea(
+        child: Center(
+          child: cardBodyView(text),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(top: 10, bottom: 10, left: 9, right: 9),
+        child: TextButton(
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.all(15.0),
+            primary: Colors.white,
+            backgroundColor: Colors.redAccent,
+            fixedSize: Size.fromWidth(MediaQuery.of(context).size.width)
+          ),
+          onPressed: () {
+            //saveEvent();
+            Fluttertoast.showToast(msg: "Event Saved Succesfully");
+            /*Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SeeAll()),
+              //(event: event)),
+            );*/
+          },
+          child: Text('Save Event', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
           ),
         ),
       ),
@@ -90,8 +70,7 @@ class EventsDetail extends StatelessWidget {
       child: Text(
         text,
         textAlign: TextAlign.center,
-        overflow: TextOverflow.ellipsis,
-        style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.w500, fontSize: 18),
+        style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.w500, fontSize: 15),
       ),
     );
   }

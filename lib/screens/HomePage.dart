@@ -6,8 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ijoin/screens/EventsDetail.dart';
 
 class HomePage extends StatefulWidget {
-  final dio = Dio();
-  bool firstTime = true;
+  final dio = new Dio();
 
   @override
   _HomeState createState() => _HomeState();
@@ -25,7 +24,6 @@ class _HomeState extends State<HomePage>{
   var _country;
   var _countryId;
   User? user = FirebaseAuth.instance.currentUser;
-  late Event event;
 
   Future searchEvent() async {
     final response = await widget.dio.get(
@@ -68,15 +66,9 @@ class _HomeState extends State<HomePage>{
 
   @override
   void initState() {
-    //if (widget.firstTime) {
-      //widget.dio.options.connectTimeout = 10*1000;
-      //widget.dio.options.receiveTimeout = 10*1000;
-      readUser();
-      //widget.firstTime = false;
-    //}
+    readUser();
     _controller = ScrollController();
     _controller.addListener(_scrollListener);//// the listener for up and down.
-    //searchEvent("Spain");
     super.initState();
   }
 
@@ -111,21 +103,16 @@ class _HomeState extends State<HomePage>{
                 itemCount: _events.length,
                 shrinkWrap: true ,
                 itemBuilder: (context, index) => ListTile(
-                   contentPadding: const EdgeInsets.all(15),
-                    title: Text(_events[index]['name'],style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                    subtitle: Text(_events[index]['venue']['location']['address']['city'] + '\n' + _events[index]['event_date']['value']),
-                    onTap: () {
-
-                      /*event.name = _events[index]['name'];
-                      event.location = _events[index]['venue']['location']['address']['city'];
-                      event.date = _events[index]['event_date']['value'];*/
-
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => EventsDetail(text: 'Event: ' + _events[index]['name'] + '\n\n' + 'Location: ' + _events[index]['venue']['location']['address']['city'] + '\n\n' + 'Date: ' + _events[index]['event_date']['value'])),
-                      //(event: event)),
-                      );
-                    },
+                  contentPadding: const EdgeInsets.all(15),
+                  title: Text(_events[index]['name'],style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  subtitle: Text(_events[index]['venue']['location']['address']['city'] + '\n' + _events[index]['event_date']['value']),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => EventsDetail(text: 'Event: ' + _events[index]['name'] + '\n\n' + 'Location: ' + _events[index]['venue']['name'] + ', ' + _events[index]['venue']['location']['address']['city'] + '\n\n' + 'Date: ' + _events[index]['event_date']['value'] + '\n\n' + 'Category: ' + _events[index]['categories'][0]['name'])),
+                    //(event: event)),
+                    );
+                  },
                 ),
               ),
             ),
