@@ -6,8 +6,9 @@ import 'SeeAll.dart';
 
 class EventsDetail extends StatelessWidget {
   final String text;
+  final String image;
   //final Event event;
-  const EventsDetail({Key? key, required this.text}) : super(key: key);
+  const EventsDetail({Key? key, required this.text, required this.image}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +18,11 @@ class EventsDetail extends StatelessWidget {
         title: const Text("Events Detail"),
         centerTitle: true,
       ),
-      body: SafeArea(
+      body:SafeArea(
         child: Center(
-          child: cardBodyView(text),
+          child: SingleChildScrollView (
+            child: cardBodyView(text),
+          ),
         ),
       ),
       bottomNavigationBar: Padding(
@@ -67,10 +70,16 @@ class EventsDetail extends StatelessWidget {
               spreadRadius: 1.0)
         ],
       ),
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-        style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.w500, fontSize: 15),
+      child: Column(
+        children: <Widget> [
+          Image.network(image),
+          const SizedBox(height:15),
+          Text(
+            text,
+            textAlign: TextAlign.center,
+            style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.w500, fontSize: 15),
+          ),
+        ]
       ),
     );
   }
