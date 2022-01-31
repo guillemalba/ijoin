@@ -4,7 +4,7 @@ import 'package:ijoin/model/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'HomePage.dart';
-import 'MyEventsPage.dart';
+import 'my_events_page.dart';
 import 'profile_page.dart';
 import 'SearchPage.dart';
 import 'login.dart';

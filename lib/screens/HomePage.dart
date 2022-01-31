@@ -75,6 +75,63 @@ class _HomeState extends State<HomePage>{
     super.initState();
   }
 
+  // card view para el titulo de cada tarjetita (Full name, Email, Country...)
+  Widget cardTitleView(String title) {
+    return Container(
+      margin: const EdgeInsets.only(top: 0, bottom: 0, left: 20, right: 20),
+      padding: const EdgeInsets.only(top: 1, bottom: 1, left: 20, right: 20),
+      decoration: const BoxDecoration(
+        shape: BoxShape.rectangle,
+        color: Colors.redAccent,
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+        boxShadow: [
+          BoxShadow(
+              color: Colors.grey,
+              blurRadius: 5.0,
+              offset: Offset(1.0, 1.0),
+              spreadRadius: 1.0)
+        ],
+      ),
+      child: Text(
+        title,
+        textAlign: TextAlign.center,
+        overflow: TextOverflow.ellipsis,
+        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
+
+  // card view para la info de cada tarjetita
+  Widget cardBodyView(String body) {
+    return Container(
+      margin: const EdgeInsets.only(top: 0.0, bottom: 10, left: 20, right: 20),
+      padding: const EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 20),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.white,
+          width: 3.0,
+        ),
+        /*borderRadius: BorderRadius.all(Radius.circular(20)),*/
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
+        shape: BoxShape.rectangle,
+        color: Colors.white,
+        boxShadow: const [
+          BoxShadow(
+              color: Colors.grey,
+              blurRadius: 5.0,
+              offset: Offset(1.0, 1.0),
+              spreadRadius: 1.0)
+        ],
+      ),
+      child: Text(
+        body,
+        textAlign: TextAlign.center,
+        overflow: TextOverflow.ellipsis,
+        style: const TextStyle(color: Colors.black54, fontWeight: FontWeight.w500),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,8 +152,8 @@ class _HomeState extends State<HomePage>{
                 shrinkWrap: true ,
                 itemBuilder: (context, index) => ListTile(
                   contentPadding: const EdgeInsets.all(15),
-                  title: Text(_events[index]['name'],style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  subtitle: Text(_events[index]['venue']['location']['address']['city'] + '\n' + DateFormat('yyyy-MM-dd').format(DateTime.parse(_events[index]['event_date']['value']))),
+                  title: cardTitleView(_events[index]['name']),
+                  subtitle: cardBodyView(_events[index]['venue']['location']['address']['city'] + '\n' + DateFormat('yyyy-MM-dd').format(DateTime.parse(_events[index]['event_date']['value']))),
                   onTap: () {
                     Navigator.push(
                       context,

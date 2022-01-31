@@ -168,6 +168,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ),
         ));
 
+    // country field
     final countryField = TextFormField(
         autofocus: false,
         controller: countryEditingController,
@@ -189,7 +190,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         decoration: InputDecoration(
           prefixIcon: const Icon(Icons.location_on_sharp),
           contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Country",
+          hintText: "Country (Example: Italy, Andorra...)",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),

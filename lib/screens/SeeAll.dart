@@ -1,6 +1,6 @@
 //Página de Events Detail
 import 'package:flutter/material.dart';
-import 'package:ijoin/screens/MyEventsPage.dart';
+import 'package:ijoin/screens/my_events_page.dart';
 
 class SeeAll extends StatelessWidget {
 

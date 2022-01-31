@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,9 @@ class EventsDetail extends StatelessWidget {
   final String text;
   final String image;
   final String id;
-  const EventsDetail({Key? key, required this.text, required this.image, required this.id}) : super(key: key);
+  EventsDetail({Key? key, required this.text, required this.image, required this.id}) : super(key: key);
+
+  final _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -56,13 +59,29 @@ class EventsDetail extends StatelessWidget {
   }
 
   // guardamos el evento en RealtimeDatabase
-  saveEvent() {
+  /*saveEvent() {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     final _ref = FirebaseDatabase.instance.reference().child("Users").child(_auth.currentUser!.uid);
     _ref.child("Events").child(id).set({
       "image": image,
       "info_event": text,
     });
+  }*/
+
+  saveEvent() async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+
+    await firebaseFirestore
+        .collection("users_events")
+        .doc(user!.uid)
+        .collection("events")
+        .doc(id).set({
+      "image": image,
+      "info_event": text,
+    });
+    Fluttertoast.showToast(msg: "Event saved successfully!");
+
   }
 
   /*
@@ -79,6 +98,7 @@ class EventsDetail extends StatelessWidget {
         ),
         shape: BoxShape.rectangle,
         color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(10)),
         boxShadow: const [
           BoxShadow(
             color: Colors.grey,
@@ -90,6 +110,7 @@ class EventsDetail extends StatelessWidget {
       ),
       child: Column(
         children: <Widget> [
+          const SizedBox(height:10),
           Image.network(image),
           const SizedBox(height:15),
           Text(

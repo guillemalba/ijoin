@@ -126,6 +126,7 @@ class _ProfilePageState extends State<ProfilePage> {
       decoration: const BoxDecoration(
         shape: BoxShape.rectangle,
         color: Colors.redAccent,
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
         boxShadow: [
           BoxShadow(
               color: Colors.grey,
@@ -155,6 +156,7 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         shape: BoxShape.rectangle,
         color: Colors.white,
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
         boxShadow: const [
           BoxShadow(
               color: Colors.grey,
