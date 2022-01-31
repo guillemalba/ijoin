@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:ijoin/screens/EventsDetail.dart';
+import 'package:ijoin/screens/events_detail.dart';
 import 'package:intl/intl.dart';
 
 /*

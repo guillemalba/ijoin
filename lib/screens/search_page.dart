@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:ijoin/model/event.dart';
-import 'package:ijoin/screens/filtros.dart';
+import 'package:ijoin/screens/filters.dart';
 import 'package:intl/intl.dart';
-import 'package:ijoin/screens/EventsDetail.dart';
+import 'package:ijoin/screens/events_detail.dart';
 
 /*
 Página de búsqueda

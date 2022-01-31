@@ -3,10 +3,10 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:ijoin/model/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'HomePage.dart';
+import 'home_page.dart';
 import 'my_events_page.dart';
 import 'profile_page.dart';
-import 'SearchPage.dart';
+import 'search_page.dart';
 import 'login.dart';
 
 /*
