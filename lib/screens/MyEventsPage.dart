@@ -1,12 +1,29 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 
 /*
 Página de mis eventos guardados
 */
 class MyEventsPage extends StatelessWidget {
-  const MyEventsPage({Key? key}) : super(key: key);
+  MyEventsPage({Key? key}) : super(key: key);
+
+  final fb = FirebaseDatabase.instance;
+  late DatabaseReference databaseReference;
+
+  showData() {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final ref = FirebaseDatabase.instance.reference().child("Users").child(_auth.currentUser!.uid).child("Events");
+    ref.once().then((DataSnapshot dataSnapshot) {
+      var keys = dataSnapshot.value.keys;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -17,11 +34,8 @@ class MyEventsPage extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.all(20),
           child: Column(
-            children: <Widget>[
-              Text(
-                "This are all your events:",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
+            children: [
+
             ],
           ),
         ),

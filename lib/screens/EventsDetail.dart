@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -5,9 +7,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 Página para ver los detalles de un evento
 */
 class EventsDetail extends StatelessWidget {
+
   final String text;
   final String image;
-  const EventsDetail({Key? key, required this.text, required this.image}) : super(key: key);
+  final String id;
+  const EventsDetail({Key? key, required this.text, required this.image, required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +40,7 @@ class EventsDetail extends StatelessWidget {
             fixedSize: Size.fromWidth(MediaQuery.of(context).size.width)
           ),
           onPressed: () {
-            //saveEvent();
+            saveEvent();
             Fluttertoast.showToast(msg: "Event Saved Succesfully");
             /*Navigator.push(
               context,
@@ -49,6 +53,15 @@ class EventsDetail extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  saveEvent() {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final _ref = FirebaseDatabase.instance.reference().child("Users").child(_auth.currentUser!.uid);
+    _ref.child("Events").child(id).set({
+      "image": image,
+      "info_event": text,
+    });
   }
 
   /*
@@ -87,4 +100,5 @@ class EventsDetail extends StatelessWidget {
       ),
     );
   }
+
 }

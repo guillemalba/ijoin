@@ -241,7 +241,7 @@ class _SearchState extends State<SearchPage>{
                 onTap: () {
                   Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => EventsDetail(text: 'Evento: \n\n' + _events[index]['name'] + '\n\n' + 'Ubicación: \n\n' + _events[index]['venue']['location']['address']['city'] + '\n\n' + 'Fecha: \n\n' + _events[index]['event_date']['value'], image: _events[index]['images']['large']['url'])),
+                  MaterialPageRoute(builder: (context) => EventsDetail(text: 'Evento: \n\n' + _events[index]['name'] + '\n\n' + 'Ubicación: \n\n' + _events[index]['venue']['location']['address']['city'] + '\n\n' + 'Fecha: \n\n' + _events[index]['event_date']['value'], image: _events[index]['images']['large']['url'], id: _events[index]['id'])),
                   //(event: event)),
                   );
                 },
