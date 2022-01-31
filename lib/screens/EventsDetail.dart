@@ -55,6 +55,7 @@ class EventsDetail extends StatelessWidget {
     );
   }
 
+  // guardamos el evento en RealtimeDatabase
   saveEvent() {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     final _ref = FirebaseDatabase.instance.reference().child("Users").child(_auth.currentUser!.uid);

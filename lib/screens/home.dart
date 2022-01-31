@@ -72,7 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-  // the logout function
+
+  // funcion para salir de la sesion activa
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).pushReplacement(

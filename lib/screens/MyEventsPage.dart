@@ -12,13 +12,13 @@ class MyEventsPage extends StatelessWidget {
   final fb = FirebaseDatabase.instance;
   late DatabaseReference databaseReference;
 
-  showData() {
+  /*showData() {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     final ref = FirebaseDatabase.instance.reference().child("Users").child(_auth.currentUser!.uid).child("Events");
     ref.once().then((DataSnapshot dataSnapshot) {
       var keys = dataSnapshot.value.keys;
     });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {

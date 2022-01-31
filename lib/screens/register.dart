@@ -24,6 +24,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   // our form key
   final _formKey = GlobalKey<FormState>();
+
   // editing Controller
   final firstNameEditingController = TextEditingController();
   final secondNameEditingController = TextEditingController();
@@ -298,6 +299,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       ),
   );*/
 
+  // funcion para registrar un usuario en Firebase mediante FirebaseAuth
   void signUp(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
@@ -336,10 +338,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     }
   }
 
+  // añadir detalles del usuario a FireStore
   postDetailsToFirestore() async {
-    // calling our firestore
-    // calling our user model
-    // sedning these values
 
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;

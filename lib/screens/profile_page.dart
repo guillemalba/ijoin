@@ -118,39 +118,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget buildTextField(
-      String labelText, String placeholder, bool isPasswordTextField) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 35.0),
-      child: TextField(
-        obscureText: isPasswordTextField ? showPassword : false,
-        decoration: InputDecoration(
-            suffixIcon: isPasswordTextField
-                ? IconButton(
-              onPressed: () {
-                setState(() {
-                  showPassword = !showPassword;
-                });
-              },
-              icon: Icon(
-                Icons.remove_red_eye,
-                color: Colors.grey,
-              ),
-            )
-                : null,
-            contentPadding: EdgeInsets.only(bottom: 3),
-            labelText: labelText,
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            hintText: placeholder,
-            hintStyle: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            )),
-      ),
-    );
-  }
-
+  // card view para el titulo de cada tarjetita (Full name, Email, Country...)
   Widget cardTitleView(String text) {
     return Container(
       margin: const EdgeInsets.only(top: 0, bottom: 0, left: 20, right: 20),
@@ -175,6 +143,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  // card view para la info de cada tarjetita
   Widget cardBodyView(String text) {
     return Container(
       margin: const EdgeInsets.only(top: 0.0, bottom: 10, left: 20, right: 20),
@@ -203,6 +172,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  // parte superior con la imagen del perfil
   Widget imageProfile() {
     return Center(
       child: Stack( children: <Widget>[
@@ -244,6 +214,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   }
 
+  // funcion para leer la informacion del usuario de la base de datos.
   void readUser() async {
 
     final docUser = FirebaseFirestore.instance.collection('users').doc(user!.uid.toString());

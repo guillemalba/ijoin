@@ -46,9 +46,11 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
 
+    // to keep the user logged in
     if (user != null) {
       return HomeScreen();
     }
+
     //email field
     final emailField = TextFormField(
         autofocus: false,
@@ -105,6 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ));
 
+    // login button
     final loginButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),

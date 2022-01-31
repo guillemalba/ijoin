@@ -36,19 +36,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   PickedFile? _imageFile;
   final ImagePicker _picker = ImagePicker();
 
-  Future pickImage(ImageSource source) async {
-    try {
-      final image = await ImagePicker().pickImage(source: source);
-      if (image == null) return;
-
-      final imageTemporary = File(image.path);
-      setState(() => this.image = imageTemporary);
-    } on PlatformException catch (e) {
-      Fluttertoast.showToast(msg: "Failed to pick image $e.");
-    }
-
-  }
-
   final firstNameEditingController = TextEditingController();
   final secondNameEditingController = TextEditingController();
   final countryEditingController = TextEditingController();
@@ -58,7 +45,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     readUser();
 
-    //first name field
+    // first name TextField
     final firstNameField = TextFormField(
         autofocus: false,
         controller: firstNameEditingController,
@@ -87,6 +74,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ),
         ));
 
+    // last name TextField
     final lastNameField = TextFormField(
         autofocus: false,
         controller: secondNameEditingController,
@@ -111,6 +99,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           ),
         ));
 
+    // country TextField
     final countryField = TextFormField(
         autofocus: false,
         controller: countryEditingController,
@@ -189,39 +178,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  Widget buildTextField(
-      String labelText, String placeholder, bool isPasswordTextField) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 35.0),
-      child: TextField(
-        obscureText: isPasswordTextField ? showPassword : false,
-        decoration: InputDecoration(
-            suffixIcon: isPasswordTextField
-                ? IconButton(
-              onPressed: () {
-                setState(() {
-                  showPassword = !showPassword;
-                });
-              },
-              icon: Icon(
-                Icons.remove_red_eye,
-                color: Colors.grey,
-              ),
-            )
-                : null,
-            contentPadding: EdgeInsets.only(bottom: 3),
-            labelText: labelText,
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            hintText: placeholder,
-            hintStyle: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            )),
-      ),
-    );
-  }
-
+  // devuelve la parte superior con donde ira colocada la imagen del perfil del usuario
   Widget imageProfile() {
     return Center(
       child: Stack( children: <Widget>[
@@ -264,6 +221,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   }
 
+  // pestaña que permite seleccionar si hacer una foto o coger una existente de la galeria para ponerla de perfil
   Widget bottomSheet() {
     return Container(
       height: 100,
@@ -306,6 +264,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
+  // funcion para poder hacer una foto con la camara del movil para el perfil del usuario
   void takePhoto(ImageSource source) async {
     final pickedFile = await _picker.getImage(
       source: source,
@@ -316,6 +275,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     });
   }
 
+  // funcion para leer la informacion del usuario de la base de datos de Firebase
   void readUser() async {
     final docUser = FirebaseFirestore.instance.collection('users').doc(user!.uid.toString());
     final snapshot = await docUser.get();
@@ -329,6 +289,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     }
   }
 
+  // funcion para guardar la informacion a la base de datos de Firebase
   saveToFirebase() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
